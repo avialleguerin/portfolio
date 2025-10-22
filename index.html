@@ -1,73 +1,51 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="fr">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Portfolio de [Votre Nom] - Développeur Full Stack diplômé de l'École 42. Spécialisé en React, Node.js, et technologies modernes." />
-    <meta name="keywords" content="développeur, full stack, react, node.js, école 42, portfolio, web development" />
-    <meta name="author" content="Votre Nom" />
-    
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://votre-portfolio.com/" />
-    <meta property="og:title" content="Portfolio - Votre Nom | Développeur Full Stack" />
-    <meta property="og:description" content="Développeur Full Stack diplômé de l'École 42. Découvrez mes projets et compétences." />
-    
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content="https://votre-portfolio.com/" />
-    <meta property="twitter:title" content="Portfolio - Votre Nom | Développeur Full Stack" />
-    <meta property="twitter:description" content="Développeur Full Stack diplômé de l'École 42. Découvrez mes projets et compétences." />
-    
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-      tailwind.config = {
-        darkMode: 'class',
-        theme: {
-          extend: {
-            colors: {
-              primary: {
-                50: '#eff6ff',
-                100: '#dbeafe',
-                200: '#bfdbfe',
-                300: '#93c5fd',
-                400: '#60a5fa',
-                500: '#3b82f6',
-                600: '#2563eb',
-                700: '#1d4ed8',
-                800: '#1e40af',
-                900: '#1e3a8a',
-              }
-            },
-            fontFamily: {
-              sans: ['Inter', 'system-ui', 'sans-serif'],
-            },
-            animation: {
-              'fade-in': 'fadeIn 0.5s ease-in-out',
-              'slide-up': 'slideUp 0.5s ease-out',
-              'bounce-slow': 'bounce 2s infinite',
-            },
-            keyframes: {
-              fadeIn: {
-                '0%': { opacity: '0' },
-                '100%': { opacity: '1' },
-              },
-              slideUp: {
-                '0%': { transform: 'translateY(20px)', opacity: '0' },
-                '100%': { transform: 'translateY(0)', opacity: '1' },
-              },
-            },
-          },
-        },
-      }
-    </script>
-    
-    <title>Portfolio - Votre Nom | Développeur Full Stack</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amandine - Web Designer</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Logo -->
+    <div class="logo">
+        <div class="logo-text">
+            <span>AM</span>
+            <span>AN</span>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <a href="#projects" class="nav-link">PROJECTS</a>
+        <a href="#contact" class="nav-link">CONTACT</a>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="intro-text">I AM</div>
+        <h1 class="main-title">AMANDINE</h1>
+        <p class="subtitle">A JUNIOR<br>WEB DESIGNER</p>
+    </main>
+
+    <!-- Social Links -->
+    <div class="social-links">
+        <a href="#" class="social-icon" aria-label="Facebook">
+            <i class="fab fa-facebook-f"></i>
+        </a>
+        <a href="#" class="social-icon" aria-label="Twitter">
+            <i class="fab fa-twitter"></i>
+        </a>
+        <a href="#" class="social-icon" aria-label="Instagram">
+            <i class="fab fa-instagram"></i>
+        </a>
+    </div>
+
+    <!-- Scroll Indicator -->
+    <div class="scroll-indicator">
+        <span>SCROLL</span>
+        <div class="scroll-line"></div>
+    </div>
+</body>
 </html>
