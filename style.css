@@ -89,7 +89,15 @@ body::-webkit-scrollbar {
     position: absolute;
     top: 50px;
     left: 50px;
-    z-index: 100;
+    z-index: 10000; /* Au-dessus de tout, y compris le click-blocker */
+    opacity: 0.7; /* Rendre le logo légèrement transparent */
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+    pointer-events: auto; /* S'assurer que les clics fonctionnent */
+}
+
+.logo:hover {
+    opacity: 1; /* Enlever la transparence au survol */
 }
 
 .logo-image {

@@ -1,3 +1,19 @@
+// Forcer le retour en haut de la page au chargement/refresh
+window.addEventListener('beforeunload', () => {
+    window.scrollTo(0, 0);
+});
+
+// Au chargement de la page, scroller en haut
+window.addEventListener('load', () => {
+    window.scrollTo(0, 0);
+});
+
+// Forcer immédiatement le scroll en haut
+if ('scrollRestoration' in history) {
+    history.scrollRestoration = 'manual';
+}
+window.scrollTo(0, 0);
+
 // Système de navigation fullpage entre sections
 let currentSection = 0;
 let isScrolling = false;
@@ -241,6 +257,41 @@ function rotateRight() {
         isRotating = false;
     }, 600);
 }
+
+// Gestion du clic sur le(s) logo(s) pour retourner à l'accueil
+const logos = document.querySelectorAll('.logo');
+const logoImages = document.querySelectorAll('.logo-image');
+console.log('Logos trouvés:', logos.length);
+
+function scrollToTop() {
+    console.log('Scroll vers le haut!');
+    window.scrollTo({ 
+        top: 0, 
+        behavior: 'smooth' 
+    });
+}
+
+// Ajouter le listener à tous les logos - tous rechargent la page
+logos.forEach((logo, index) => {
+    console.log(`Ajout du listener sur le logo ${index + 1}`);
+    logo.addEventListener('click', (e) => {
+        console.log(`Clic sur le logo ${index + 1} - rechargement de la page`);
+        e.preventDefault();
+        e.stopPropagation();
+        window.location.reload();
+    });
+});
+
+// Ajouter le listener à toutes les images de logo - toutes rechargent la page
+logoImages.forEach((logoImage, index) => {
+    console.log(`Ajout du listener sur l'image logo ${index + 1}`);
+    logoImage.addEventListener('click', (e) => {
+        console.log(`Clic sur l'image logo ${index + 1} - rechargement de la page`);
+        e.preventDefault();
+        e.stopPropagation();
+        window.location.reload();
+    });
+});
 
 // Gestion des clics sur les images latérales
 const leftImage = document.querySelector('.project-bg-left');
