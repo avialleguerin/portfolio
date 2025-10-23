@@ -108,6 +108,11 @@ function rotateLeft() {
     const centerImg = document.querySelector('.project-bg-center');
     const rightImg = document.querySelector('.project-bg-right');
     
+    // Nettoyer toutes les classes d'animation existantes
+    leftImg.classList.remove('slide-to-center-right', 'slide-to-center-left', 'fade-out-left', 'fade-in-left');
+    centerImg.classList.remove('slide-to-left', 'slide-to-right');
+    rightImg.classList.remove('slide-to-center-right', 'slide-to-center-left', 'fade-out-right', 'fade-in-right');
+    
     // Rotation vers la droite : gauche -> centre, centre -> droite, droite disparait, nouveau à gauche
     leftImg.classList.add('slide-to-center-right');
     centerImg.classList.add('slide-to-right');
@@ -126,14 +131,25 @@ function rotateLeft() {
         // Mettre à jour l'affichage
         updateProjectDisplay();
         
-        // Animer la nouvelle image à gauche qui apparaît
+        // Nettoyer les classes sur les nouvelles images après le swap
         const newLeftImg = document.querySelector('.project-bg-left');
+        const newCenterImg = document.querySelector('.project-bg-center');
+        const newRightImg = document.querySelector('.project-bg-right');
+        
+        newLeftImg.classList.remove('slide-to-center-right', 'slide-to-center-left', 'fade-out-left', 'fade-in-left');
+        newCenterImg.classList.remove('slide-to-left', 'slide-to-right');
+        newRightImg.classList.remove('slide-to-center-right', 'slide-to-center-left', 'fade-out-right', 'fade-in-right');
+        
+        // Animer la nouvelle image à gauche qui apparaît
         newLeftImg.classList.add('fade-in-left');
         
         setTimeout(() => {
             newLeftImg.classList.remove('fade-in-left');
-            isRotating = false;
-        }, 800);
+            // Petit délai de sécurité avant de permettre la prochaine rotation
+            setTimeout(() => {
+                isRotating = false;
+            }, 50);
+        }, 600);
     }, 600);
 }
 
@@ -144,6 +160,11 @@ function rotateRight() {
     const leftImg = document.querySelector('.project-bg-left');
     const centerImg = document.querySelector('.project-bg-center');
     const rightImg = document.querySelector('.project-bg-right');
+    
+    // Nettoyer toutes les classes d'animation existantes
+    leftImg.classList.remove('slide-to-center-right', 'slide-to-center-left', 'fade-out-left', 'fade-in-left');
+    centerImg.classList.remove('slide-to-left', 'slide-to-right');
+    rightImg.classList.remove('slide-to-center-right', 'slide-to-center-left', 'fade-out-right', 'fade-in-right');
     
     // Rotation vers la gauche : droite -> centre, centre -> gauche, gauche disparait, nouveau à droite
     rightImg.classList.add('slide-to-center-left');
@@ -163,14 +184,25 @@ function rotateRight() {
         // Mettre à jour l'affichage
         updateProjectDisplay();
         
-        // Animer la nouvelle image à droite qui apparaît
+        // Nettoyer les classes sur les nouvelles images après le swap
+        const newLeftImg = document.querySelector('.project-bg-left');
+        const newCenterImg = document.querySelector('.project-bg-center');
         const newRightImg = document.querySelector('.project-bg-right');
+        
+        newLeftImg.classList.remove('slide-to-center-right', 'slide-to-center-left', 'fade-out-left', 'fade-in-left');
+        newCenterImg.classList.remove('slide-to-left', 'slide-to-right');
+        newRightImg.classList.remove('slide-to-center-right', 'slide-to-center-left', 'fade-out-right', 'fade-in-right');
+        
+        // Animer la nouvelle image à droite qui apparaît
         newRightImg.classList.add('fade-in-right');
         
         setTimeout(() => {
             newRightImg.classList.remove('fade-in-right');
-            isRotating = false;
-        }, 800);
+            // Petit délai de sécurité avant de permettre la prochaine rotation
+            setTimeout(() => {
+                isRotating = false;
+            }, 50);
+        }, 600);
     }, 600);
 }
 
