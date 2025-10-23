@@ -84,9 +84,9 @@ body {
 }
 
 .intro-text {
-    font-size: 14px;
+    font-size: 16px;
     letter-spacing: 8px;
-    color: rgba(255, 255, 255, 0.5);
+    color: rgba(255, 255, 255, 0.7);
     font-weight: 300;
     text-align: right;
     margin-bottom: 20px;
@@ -105,9 +105,9 @@ body {
 }
 
 .subtitle {
-    font-size: 14px;
+    font-size: 16px;
     letter-spacing: 6px;
-    color: rgba(255, 255, 255, 0.6);
+    color: rgba(255, 255, 255, 0.7);
     font-weight: 300;
     text-align: left;
     margin-top: 20px;
