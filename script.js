@@ -104,6 +104,10 @@ function rotateLeft() {
     if (isRotating) return;
     isRotating = true;
     
+    // Activer le bloqueur de clics
+    const clickBlocker = document.querySelector('.click-blocker');
+    if (clickBlocker) clickBlocker.classList.add('active');
+    
     const leftImg = document.querySelector('.project-bg-left');
     const centerImg = document.querySelector('.project-bg-center');
     const rightImg = document.querySelector('.project-bg-right');
@@ -112,6 +116,11 @@ function rotateLeft() {
     leftImg.classList.remove('slide-to-center-right', 'slide-to-center-left', 'fade-out-left', 'fade-in-left');
     centerImg.classList.remove('slide-to-left', 'slide-to-right');
     rightImg.classList.remove('slide-to-center-right', 'slide-to-center-left', 'fade-out-right', 'fade-in-right');
+    
+    // Faire disparaitre le contenu textuel en meme temps que les images
+    const projectContent = document.querySelector('.project-main-content');
+    projectContent.classList.remove('fade-in-content');
+    projectContent.classList.add('fade-out-content');
     
     // Rotation vers la droite : gauche -> centre, centre -> droite, droite disparait, nouveau à gauche
     leftImg.classList.add('slide-to-center-right');
@@ -123,39 +132,52 @@ function rotateLeft() {
         // Mettre à jour l'index
         currentProjectIndex = (currentProjectIndex - 1 + projects.length) % projects.length;
         
-        // Retirer toutes les classes d'animation
-        leftImg.classList.remove('slide-to-center-right');
-        centerImg.classList.remove('slide-to-right');
-        rightImg.classList.remove('fade-out-right');
+        // Retirer toutes les classes d'animation et nettoyer TOUS les éléments
+        leftImg.classList.remove('slide-to-center-right', 'slide-to-center-left', 'fade-out-left', 'fade-in-left');
+        centerImg.classList.remove('slide-to-left', 'slide-to-right');
+        rightImg.classList.remove('slide-to-center-right', 'slide-to-center-left', 'fade-out-right', 'fade-in-right');
+        
+        // Forcer la réinitialisation de l'opacity (car forwards garde opacity: 0)
+        leftImg.style.opacity = '';
+        centerImg.style.opacity = '';
+        rightImg.style.opacity = '';
         
         // Mettre à jour l'affichage
         updateProjectDisplay();
         
-        // Nettoyer les classes sur les nouvelles images après le swap
+        // Récupérer les nouvelles références
         const newLeftImg = document.querySelector('.project-bg-left');
-        const newCenterImg = document.querySelector('.project-bg-center');
-        const newRightImg = document.querySelector('.project-bg-right');
         
-        newLeftImg.classList.remove('slide-to-center-right', 'slide-to-center-left', 'fade-out-left', 'fade-in-left');
-        newCenterImg.classList.remove('slide-to-left', 'slide-to-right');
-        newRightImg.classList.remove('slide-to-center-right', 'slide-to-center-left', 'fade-out-right', 'fade-in-right');
+        // Forcer un reflow pour s'assurer que l'opacity reset est appliqué
+        void newLeftImg.offsetHeight;
+        
+        // S'assurer que l'élément a une opacity de 1 avant le fade-in
+        newLeftImg.style.opacity = '1';
         
         // Animer la nouvelle image à gauche qui apparaît
         newLeftImg.classList.add('fade-in-left');
         
-        setTimeout(() => {
-            newLeftImg.classList.remove('fade-in-left');
-            // Petit délai de sécurité avant de permettre la prochaine rotation
-            setTimeout(() => {
-                isRotating = false;
-            }, 50);
-        }, 600);
+        // Faire apparaitre le nouveau contenu textuel
+        const newProjectContent = document.querySelector('.project-main-content');
+        newProjectContent.classList.remove('fade-out-content');
+        newProjectContent.classList.add('fade-in-content');
+        
+        // Désactiver le bloqueur de clics
+        const clickBlocker = document.querySelector('.click-blocker');
+        if (clickBlocker) clickBlocker.classList.remove('active');
+        
+        // Nettoyer après l'animation et permettre la prochaine rotation
+        isRotating = false;
     }, 600);
 }
 
 function rotateRight() {
     if (isRotating) return;
     isRotating = true;
+    
+    // Activer le bloqueur de clics
+    const clickBlocker = document.querySelector('.click-blocker');
+    if (clickBlocker) clickBlocker.classList.add('active');
     
     const leftImg = document.querySelector('.project-bg-left');
     const centerImg = document.querySelector('.project-bg-center');
@@ -165,6 +187,11 @@ function rotateRight() {
     leftImg.classList.remove('slide-to-center-right', 'slide-to-center-left', 'fade-out-left', 'fade-in-left');
     centerImg.classList.remove('slide-to-left', 'slide-to-right');
     rightImg.classList.remove('slide-to-center-right', 'slide-to-center-left', 'fade-out-right', 'fade-in-right');
+    
+    // Faire disparaitre le contenu textuel en meme temps que les images
+    const projectContent = document.querySelector('.project-main-content');
+    projectContent.classList.remove('fade-in-content');
+    projectContent.classList.add('fade-out-content');
     
     // Rotation vers la gauche : droite -> centre, centre -> gauche, gauche disparait, nouveau à droite
     rightImg.classList.add('slide-to-center-left');
@@ -176,33 +203,42 @@ function rotateRight() {
         // Mettre à jour l'index
         currentProjectIndex = (currentProjectIndex + 1) % projects.length;
         
-        // Retirer toutes les classes d'animation
-        rightImg.classList.remove('slide-to-center-left');
-        centerImg.classList.remove('slide-to-left');
-        leftImg.classList.remove('fade-out-left');
+        // Retirer toutes les classes d'animation et nettoyer TOUS les éléments
+        leftImg.classList.remove('slide-to-center-right', 'slide-to-center-left', 'fade-out-left', 'fade-in-left');
+        centerImg.classList.remove('slide-to-left', 'slide-to-right');
+        rightImg.classList.remove('slide-to-center-right', 'slide-to-center-left', 'fade-out-right', 'fade-in-right');
+        
+        // Forcer la réinitialisation de l'opacity (car forwards garde opacity: 0)
+        leftImg.style.opacity = '';
+        centerImg.style.opacity = '';
+        rightImg.style.opacity = '';
         
         // Mettre à jour l'affichage
         updateProjectDisplay();
         
-        // Nettoyer les classes sur les nouvelles images après le swap
-        const newLeftImg = document.querySelector('.project-bg-left');
-        const newCenterImg = document.querySelector('.project-bg-center');
+        // Récupérer les nouvelles références
         const newRightImg = document.querySelector('.project-bg-right');
         
-        newLeftImg.classList.remove('slide-to-center-right', 'slide-to-center-left', 'fade-out-left', 'fade-in-left');
-        newCenterImg.classList.remove('slide-to-left', 'slide-to-right');
-        newRightImg.classList.remove('slide-to-center-right', 'slide-to-center-left', 'fade-out-right', 'fade-in-right');
+        // Forcer un reflow pour s'assurer que l'opacity reset est appliqué
+        void newRightImg.offsetHeight;
+        
+        // S'assurer que l'élément a une opacity de 1 avant le fade-in
+        newRightImg.style.opacity = '1';
         
         // Animer la nouvelle image à droite qui apparaît
         newRightImg.classList.add('fade-in-right');
         
-        setTimeout(() => {
-            newRightImg.classList.remove('fade-in-right');
-            // Petit délai de sécurité avant de permettre la prochaine rotation
-            setTimeout(() => {
-                isRotating = false;
-            }, 50);
-        }, 600);
+        // Faire apparaitre le nouveau contenu textuel
+        const newProjectContent = document.querySelector('.project-main-content');
+        newProjectContent.classList.remove('fade-out-content');
+        newProjectContent.classList.add('fade-in-content');
+        
+        // Désactiver le bloqueur de clics
+        const clickBlocker = document.querySelector('.click-blocker');
+        if (clickBlocker) clickBlocker.classList.remove('active');
+        
+        // Nettoyer après l'animation et permettre la prochaine rotation
+        isRotating = false;
     }, 600);
 }
 
