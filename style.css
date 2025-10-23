@@ -18,7 +18,7 @@ html::-webkit-scrollbar {
 }
 
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: 'Lemon Milk', 'Arial', sans-serif;
     background: transparent;
     color: #fff;
     min-height: 100vh;
@@ -70,32 +70,33 @@ body::-webkit-scrollbar {
 
 .logo {
     position: absolute;
-    top: 20px;
-    left: 20px;
+    top: 50px;
+    left: 50px;
     z-index: 100;
 }
 
 .logo-image {
-    height: 70px;
+    height: 90px;
     width: auto;
     object-fit: contain;
 }
 
 .navbar {
     position: absolute;
-    top: 40px;
-    right: 40px;
+    top: 70px;
+    right: 70px;
     display: flex;
     gap: 40px;
     z-index: 100;
 }
 
 .nav-link {
+    font-family: 'Lagu Sans', sans-serif;
+    font-weight: 500;
     color: rgba(255, 255, 255, 0.7);
     text-decoration: none;
-    font-size: 12px;
+    font-size: 14px;
     letter-spacing: 3px;
-    font-weight: 600;
     transition: all 0.3s;
     position: relative;
 }
@@ -131,10 +132,11 @@ body::-webkit-scrollbar {
 }
 
 .intro-text {
+    font-family: 'Lagu Sans', sans-serif;
+    font-weight: 500;
     font-size: 16px;
     letter-spacing: 8px;
     color: rgba(255, 255, 255, 0.7);
-    font-weight: 300;
     text-align: right;
     margin-bottom: 20px;
     align-self: flex-end;
@@ -152,10 +154,11 @@ body::-webkit-scrollbar {
 }
 
 .subtitle {
+    font-family: 'Lagu Sans', sans-serif;
+    font-weight: 500;
     font-size: 16px;
     letter-spacing: 6px;
     color: rgba(255, 255, 255, 0.7);
-    font-weight: 300;
     text-align: left;
     margin-top: 20px;
     align-self: flex-start;
@@ -164,8 +167,8 @@ body::-webkit-scrollbar {
 
 .social-links {
     position: absolute;
-    bottom: 40px;
-    left: 40px;
+    bottom: 70px;
+    left: 70px;
     display: flex;
     flex-direction: column;
     gap: 25px;
@@ -174,7 +177,7 @@ body::-webkit-scrollbar {
 
 .social-icon {
     color: rgba(255, 255, 255, 0.5);
-    font-size: 16px;
+    font-size: 20px;
     transition: all 0.3s;
     text-decoration: none;
 }
@@ -186,8 +189,8 @@ body::-webkit-scrollbar {
 
 .scroll-indicator {
     position: absolute;
-    bottom: 40px;
-    right: 40px;
+    bottom: 70px;
+    right: 70px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -195,26 +198,27 @@ body::-webkit-scrollbar {
     z-index: 100;
 }
 
-/* Ligne au-dessus de SCROLL */
-.scroll-indicator::before {
-    content: '';
-    width: 1px;
-    height: 25px;
-    background: rgba(255, 255, 255, 0.5);
-}
-
 .scroll-indicator span {
+    font-family: 'Lagu Sans', sans-serif;
+    font-weight: 500;
     writing-mode: vertical-rl;
-    font-size: 11px;
+    font-size: 13px;
     letter-spacing: 4px;
     color: rgba(255, 255, 255, 0.5);
-    font-weight: 300;
 }
 
 .scroll-line {
     width: 1px;
-    height: 25px;
-    background: rgba(255, 255, 255, 0.5);
+    height: 35px;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.5), transparent);
+}
+
+/* Ligne au-dessus de SCROLL uniquement sur la page projets */
+.scroll-indicator-projects::before {
+    content: '';
+    width: 1px;
+    height: 35px;
+    background: linear-gradient(to top, rgba(255, 255, 255, 0.5), transparent);
 }
 
 /* Projects Section */
@@ -230,25 +234,19 @@ body::-webkit-scrollbar {
 
 /* Projects Background */
 .projects-background {
-    position: absolute;
-    top: 120px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 100%;
-    max-width: 1400px;
+    margin: auto; 
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 40px;
+    gap: -10px;
     padding: 0 80px;
     z-index: 1;
 }
 
 .project-bg {
     flex: 1;
-    height: 45vh;
+    height: 55vh;
     max-width: 400px;
-    border-radius: 15px;
     overflow: hidden;
     position: relative;
     transition: all 0.5s ease;
@@ -269,12 +267,16 @@ body::-webkit-scrollbar {
 
 /* Carte centrale carrée */
 .project-bg-center {
-    height: 45vh;
-    width: 45vh;
-    max-width: 45vh;
-    min-width: 45vh;
-    flex: 0 0 45vh;
+    height: 55vh;
+    width: 55vh;
+    max-width: 55vh;
+    min-width: 55vh;
+    flex: 0 0 55vh;
     aspect-ratio: 1 / 1;
+}
+
+.project-bg-center:hover {
+    transform: scale(1.02);   
 }
 
 .project-bg img {
@@ -289,14 +291,15 @@ body::-webkit-scrollbar {
 .project-bg-right {
     filter: blur(3px) brightness(0.6);
     opacity: 0.5;
-    transform: scale(0.95);
+    transform: scale(0.8);
 }
 
 
 
 /* Hover effects */
-.project-bg:hover {
-    transform: scale(1.02);
+.project-bg-left:hover,
+.project-bg-right:hover {
+    transform: scale(0.9);   
 }
 
 /* Main Project Content */
@@ -312,9 +315,9 @@ body::-webkit-scrollbar {
 }
 
 .project-main-title {
-    font-size: 120px;
+    font-size: 70px;
     font-weight: 900;
-    letter-spacing: 12px;
+    letter-spacing: 4px;
     color: #fff;
     margin-bottom: 30px;
     text-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
@@ -322,7 +325,8 @@ body::-webkit-scrollbar {
 }
 
 .project-description {
-    font-size: 16px;
+    font-family: 'Harmonia Sans', 'Arial', sans-serif;
+    font-size: 20px;
     color: rgba(255, 255, 255, 0.9);
     line-height: 1.8;
     margin-bottom: 40px;
@@ -330,14 +334,14 @@ body::-webkit-scrollbar {
 }
 
 .view-project-btn {
+    font-family: 'Lagu Sans', sans-serif;
+    font-weight: 500;
     padding: 15px 50px;
     font-size: 14px;
     letter-spacing: 3px;
-    font-weight: 600;
     color: #fff;
     background: transparent;
     border: 2px solid rgba(255, 255, 255, 0.5);
-    border-radius: 5px;
     cursor: pointer;
     transition: all 0.3s ease;
     text-transform: uppercase;
