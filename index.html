@@ -15,41 +15,81 @@
     </video>
     <div class="video-overlay"></div>
 
-    <!-- Logo -->
-    <div class="logo">
-        <img src="logo.png" alt="AMAN Logo" class="logo-image">
-    </div>
+    <!-- Home Section -->
+    <section id="home" class="home-section">
+        <!-- Logo -->
+        <div class="logo">
+            <img src="logo.png" alt="AMAN Logo" class="logo-image">
+        </div>
 
-    <!-- Navigation -->
-    <nav class="navbar">
-        <a href="#projects" class="nav-link">PROJECTS</a>
-        <a href="#contact" class="nav-link">CONTACT</a>
-    </nav>
+        <!-- Navigation -->
+        <nav class="navbar">
+            <a href="#projects" class="nav-link">PROJECTS</a>
+            <a href="#contact" class="nav-link">CONTACT</a>
+        </nav>
 
-    <!-- Main Content -->
-    <main class="main-content">
-        <div class="intro-text">I AM</div>
-        <h1 class="main-title">AMANDINE</h1>
-        <p class="subtitle">A JUNIOR<br>WEB DESIGNER</p>
-    </main>
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="intro-text">I AM</div>
+            <h1 class="main-title">AMANDINE</h1>
+            <p class="subtitle">A JUNIOR<br>WEB DESIGNER</p>
+        </main>
 
-    <!-- Social Links -->
-    <div class="social-links">
-        <a href="#" class="social-icon" aria-label="Facebook">
-            <i class="fab fa-facebook-f"></i>
-        </a>
-        <a href="#" class="social-icon" aria-label="Twitter">
-            <i class="fab fa-twitter"></i>
-        </a>
-        <a href="#" class="social-icon" aria-label="Instagram">
-            <i class="fab fa-instagram"></i>
-        </a>
-    </div>
+        <!-- Social Links -->
+        <div class="social-links">
+            <a href="#" class="social-icon" aria-label="Facebook">
+                <i class="fab fa-facebook-f"></i>
+            </a>
+            <a href="#" class="social-icon" aria-label="Twitter">
+                <i class="fab fa-twitter"></i>
+            </a>
+            <a href="#" class="social-icon" aria-label="Instagram">
+                <i class="fab fa-instagram"></i>
+            </a>
+        </div>
 
-    <!-- Scroll Indicator -->
-    <div class="scroll-indicator">
-        <span>SCROLL</span>
-        <div class="scroll-line"></div>
-    </div>
+        <!-- Scroll Indicator -->
+        <div class="scroll-indicator">
+            <span>SCROLL</span>
+            <div class="scroll-line"></div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="projects-section">
+        <div class="projects-container">
+            <h2 class="projects-title">MES PROJETS</h2>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <img src="project1.jpg" alt="Projet 1">
+                    <div class="project-info">
+                        <h3>Finance Tracker</h3>
+                        <p>Description du projet</p>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <img src="project2.png" alt="Projet 2">
+                    <div class="project-info">
+                        <h3>Nom du Projet</h3>
+                        <p>Description du projet</p>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <img src="project3.png" alt="Projet 3">
+                    <div class="project-info">
+                        <h3>Nom du Projet</h3>
+                        <p>Description du projet</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bouton retour en haut -->
+    <button id="back-to-top" class="back-to-top" aria-label="Retour en haut">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script src="script.js"></script>
 </body>
 </html>
