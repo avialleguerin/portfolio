@@ -103,17 +103,75 @@ function updateProjectDisplay() {
 function rotateLeft() {
     if (isRotating) return;
     isRotating = true;
-    currentProjectIndex = (currentProjectIndex - 1 + projects.length) % projects.length;
-    updateProjectDisplay();
-    setTimeout(() => { isRotating = false; }, 400);
+    
+    const leftImg = document.querySelector('.project-bg-left');
+    const centerImg = document.querySelector('.project-bg-center');
+    const rightImg = document.querySelector('.project-bg-right');
+    
+    // Rotation vers la droite : gauche -> centre, centre -> droite, droite disparait, nouveau à gauche
+    leftImg.classList.add('slide-to-center-right');
+    centerImg.classList.add('slide-to-right');
+    rightImg.classList.add('fade-out-right');
+    
+    // Attendre la fin de l'animation
+    setTimeout(() => {
+        // Mettre à jour l'index
+        currentProjectIndex = (currentProjectIndex - 1 + projects.length) % projects.length;
+        
+        // Retirer toutes les classes d'animation
+        leftImg.classList.remove('slide-to-center-right');
+        centerImg.classList.remove('slide-to-right');
+        rightImg.classList.remove('fade-out-right');
+        
+        // Mettre à jour l'affichage
+        updateProjectDisplay();
+        
+        // Animer la nouvelle image à gauche qui apparaît
+        const newLeftImg = document.querySelector('.project-bg-left');
+        newLeftImg.classList.add('fade-in-left');
+        
+        setTimeout(() => {
+            newLeftImg.classList.remove('fade-in-left');
+            isRotating = false;
+        }, 800);
+    }, 600);
 }
 
 function rotateRight() {
     if (isRotating) return;
     isRotating = true;
-    currentProjectIndex = (currentProjectIndex + 1) % projects.length;
-    updateProjectDisplay();
-    setTimeout(() => { isRotating = false; }, 400);
+    
+    const leftImg = document.querySelector('.project-bg-left');
+    const centerImg = document.querySelector('.project-bg-center');
+    const rightImg = document.querySelector('.project-bg-right');
+    
+    // Rotation vers la gauche : droite -> centre, centre -> gauche, gauche disparait, nouveau à droite
+    rightImg.classList.add('slide-to-center-left');
+    centerImg.classList.add('slide-to-left');
+    leftImg.classList.add('fade-out-left');
+    
+    // Attendre la fin de l'animation
+    setTimeout(() => {
+        // Mettre à jour l'index
+        currentProjectIndex = (currentProjectIndex + 1) % projects.length;
+        
+        // Retirer toutes les classes d'animation
+        rightImg.classList.remove('slide-to-center-left');
+        centerImg.classList.remove('slide-to-left');
+        leftImg.classList.remove('fade-out-left');
+        
+        // Mettre à jour l'affichage
+        updateProjectDisplay();
+        
+        // Animer la nouvelle image à droite qui apparaît
+        const newRightImg = document.querySelector('.project-bg-right');
+        newRightImg.classList.add('fade-in-right');
+        
+        setTimeout(() => {
+            newRightImg.classList.remove('fade-in-right');
+            isRotating = false;
+        }, 800);
+    }, 600);
 }
 
 // Gestion des clics sur les images latérales
