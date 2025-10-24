@@ -214,9 +214,9 @@ const ContactSection = () => {
                 type="submit"
                 className="font-lagu font-medium py-[15px] px-[50px] text-sm tracking-[3px] text-white/80 bg-[#222] border-none
                           shadow-[5px_8px_20px_rgba(0,0,0,0.4)] cursor-pointer transition-all duration-300 uppercase pointer-events-auto
-                          hover:text-white hover:bg-[#333] hover:shadow-[6px_10px_25px_rgba(0,0,0,0.5)] disabled:opacity-60 disabled:cursor-not-allowed"
+                          hover:text-white hover:bg-[#333] hover:shadow-[6px_10px_25px_rgba(0,0,0,0.5)] disabled:opacity-60 disabled:cursor-not-allowed inline-flex items-center gap-3"
                 disabled={isSending}
-              >{isSending ? 'ENVOI...' : 'SEND MESSAGE'} <span className="text-xl">→</span>
+              >{isSending ? 'ENVOI...' : 'SEND MESSAGE'} <img src="/send.png" alt="Arrow" className="inline-block w-5 h-5" />
               </button>
             </div>
             {status.message && (

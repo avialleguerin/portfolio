@@ -84,12 +84,12 @@ const projects = [
     {
         image: 'project1.png',
         title: 'PORTFOLIO',
-        description: 'Portfolio web développé en totale autonomie. Inclut un système de gestion de transactions, budgets, objectifs d\'épargne, catégorisation automatique et tableau de bord avec statistiques avancées.'
+        description: 'Portfolio web developed in total autonomy. Includes a transaction management system, budgets, savings objectives, automatic categorization and a dashboard with advanced statistics.'
     },
     {
         image: 'project2.png',
         title: 'PORTFOLIO',
-        description: 'Portfolio web développé en totale autonomie. Inclut un système de gestion de transactions, budgets, objectifs d\'épargne, catégorisation automatique et tableau de bord avec statistiques avancées.'
+        description: 'Portfolio web developed in total autonomy. Includes a transaction management system, budgets, savings objectives, automatic categorization and a dashboard with advanced statistics.'
     },
     {
         image: 'project3.png',
