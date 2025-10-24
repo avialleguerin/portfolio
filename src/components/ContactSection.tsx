@@ -3,6 +3,7 @@ import Logo from './Logo'
 import Navigation from './Navigation'
 import SocialLinks from './SocialLinks'
 import ScrollIndicator from './ScrollIndicator'
+import { CONTACT_EMAIL, EMAILJS_PUBLIC_KEY, EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID } from '../data/constants'
 
 const ContactSection = () => {
   const [formData, setFormData] = useState({
@@ -12,10 +13,52 @@ const ContactSection = () => {
     message: ''
   })
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [isSending, setIsSending] = useState(false)
+  const [status, setStatus] = useState<{ type: 'success' | 'error' | null; message: string }>({ type: null, message: '' })
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    // Handle form submission here
-    console.log('Form submitted:', formData)
+    setStatus({ type: null, message: '' })
+
+    // Basic validation
+    if (!formData.name || !formData.email || !formData.message) {
+      setStatus({ type: 'error', message: 'Veuillez remplir tous les champs requis.' })
+      return
+    }
+
+    if (!EMAILJS_PUBLIC_KEY || !EMAILJS_SERVICE_ID || !EMAILJS_TEMPLATE_ID) {
+      console.error('EmailJS keys are missing. Please fill them in src/data/constants.ts')
+      setStatus({ type: 'error', message: "Configuration d'envoi d'email manquante. Contactez l'administrateur." })
+      return
+    }
+
+    try {
+      setIsSending(true)
+      const emailjs = (window as any).emailjs
+      if (!emailjs) throw new Error('EmailJS SDK not loaded')
+      // Initialize (idempotent)
+      if (emailjs && emailjs.init) {
+        emailjs.init(EMAILJS_PUBLIC_KEY)
+      }
+
+      const templateParams = {
+        from_name: formData.name,
+        from_email: formData.email,
+        phone: formData.phone,
+        message: formData.message,
+        to_email: CONTACT_EMAIL
+      }
+
+      await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams)
+
+      setStatus({ type: 'success', message: 'Merci ! Votre message a été envoyé avec succès.' })
+      setFormData({ name: '', phone: '', email: '', message: '' })
+    } catch (err) {
+      console.error('Email send error:', err)
+      setStatus({ type: 'error', message: "Une erreur s'est produite lors de l'envoi. Réessayez plus tard." })
+    } finally {
+      setIsSending(false)
+    }
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -105,7 +148,7 @@ const ContactSection = () => {
               <input
                 type="text"
                 name="name"
-                placeholder="Your name"
+                placeholder="Your name*"
                 value={formData.name}
                 onChange={handleChange}
                 required
@@ -132,7 +175,7 @@ const ContactSection = () => {
               <input
                 type="email"
                 name="email"
-                placeholder="Your e-mail"
+                placeholder="Your e-mail*"
                 value={formData.email}
                 onChange={handleChange}
                 required
@@ -145,7 +188,7 @@ const ContactSection = () => {
             <div>
               <textarea
                 name="message"
-                placeholder="Message"
+                placeholder="Message*"
                 value={formData.message}
                 onChange={handleChange}
                 required
@@ -161,10 +204,16 @@ const ContactSection = () => {
                 type="submit"
                 className="font-lagu font-medium py-[15px] px-[50px] text-sm tracking-[3px] text-white/80 bg-[#222] border-none
                           shadow-[5px_8px_20px_rgba(0,0,0,0.4)] cursor-pointer transition-all duration-300 uppercase pointer-events-auto
-                          hover:text-white hover:bg-[#333] hover:shadow-[6px_10px_25px_rgba(0,0,0,0.5)]"
-              >SEND MESSAGE <span className="text-xl">→</span>
+                          hover:text-white hover:bg-[#333] hover:shadow-[6px_10px_25px_rgba(0,0,0,0.5)] disabled:opacity-60 disabled:cursor-not-allowed"
+                disabled={isSending}
+              >{isSending ? 'ENVOI...' : 'SEND MESSAGE'} <span className="text-xl">→</span>
               </button>
             </div>
+            {status.message && (
+              <div className={`mt-4 text-sm ${status.type === 'success' ? 'text-green-400' : 'text-red-400'}`}>
+                {status.message}
+              </div>
+            )}
           </form>
         </div>
       </div>

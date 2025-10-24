@@ -1,5 +1,13 @@
 import type { Project, NavLink, SocialLink } from '../types'
 
+// Contact email used by the contact form (target recipient)
+export const CONTACT_EMAIL = 'avialleguerin@gmail.com'
+
+// EmailJS configuration (fill these with your EmailJS credentials)
+export const EMAILJS_PUBLIC_KEY = '' // e.g. 'your_public_key'
+export const EMAILJS_SERVICE_ID = '' // e.g. 'service_xxx'
+export const EMAILJS_TEMPLATE_ID = '' // e.g. 'template_xxx'
+
 export const NAV_LINKS: NavLink[] = [
   { href: '#projects', label: 'PROJECTS' },
   { href: '#contact', label: 'CONTACT' }
