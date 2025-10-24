@@ -197,7 +197,7 @@ const ProjectCarousel = ({ onViewProject }: ProjectCarouselProps) => {
         </h1>
         
         <p className="font-antario font-bold text-lg text-[#c9c9c9e6] leading-[1.6] mb-10 [text-shadow:0_2px_10px_rgba(0,0,0,0.8)] pointer-events-none">
-          {centerProject.description}
+          {centerProject.summary}
         </p>
         
         <button

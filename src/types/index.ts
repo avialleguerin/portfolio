@@ -4,6 +4,7 @@ export interface Project {
   // Optional gallery images; if provided, UI will use these instead of single image
   images?: string[]
   title: string
+  summary: string
   description: string
   tools?: string[]
 }

@@ -37,21 +37,24 @@ export const PROJECTS: Project[] = [
     image: '/project1.png',
     images: ['/project1.png', '/project2.png', '/project3.png'],
     title: 'PORTFOLIO',
-    description: 'Portfolio web developed in total autonomy. Includes a transaction management system, budgets, savings objectives, automatic categorization and a dashboard with advanced statistics.',
+    summary: 'Portfolio web developed in total autonomy. Includes a transaction management system, budgets, savings objectives, automatic categorization and a dashboard with advanced statistics.',
+    description: 'Fully autonomous development of a complete web portfolio application. The platform features a robust transaction management system, dynamic budgeting tools, customizable savings goals, and automated expense categorization. It also includes an interactive dashboard providing detailed analytics and advanced financial statistics for comprehensive tracking and decision-making.',
     tools: ['React', 'TypeScript', 'Vite', 'TailwindCSS']
   },
   {
     image: '/project2.png',
     images: ['/project2.png', '/project1.png', '/project3.png', '/project2.png'],
     title: 'PORTFOLIO',
-    description: 'Portfolio web developed in total autonomy. Includes a transaction management system, budgets, savings objectives, automatic categorization and a dashboard with advanced statistics.',
+    summary: 'Portfolio web developed in total autonomy. Includes a transaction management system, budgets, savings objectives, automatic categorization and a dashboard with advanced statistics.',
+    description: 'Fully autonomous development of a complete web portfolio application. The platform features a robust transaction management system, dynamic budgeting tools, customizable savings goals, and automated expense categorization. It also includes an interactive dashboard providing detailed analytics and advanced financial statistics for comprehensive tracking and decision-making.',
     tools: ['Next.js', 'Framer Motion', 'SCSS']
   },
   {
     image: '/project3.png',
     images: ['/project3.png', '/project2.png', '/project1.png'],
     title: 'FINANCE TRACKER',
-    description: 'Web app for personal finance management developed in total autonomy. Includes a transaction management system, budgets, savings objectives, automatic categorization and an advanced statistics dashboard.',
+    summary: 'Web app for personal finance management developed in total autonomy. Includes a transaction management system, budgets, savings objectives, automatic categorization and an advanced statistics dashboard.',
+    description: 'Fully autonomous development of a complete web application for personal finance management. The platform allows users to track and manage their transactions, define budgets, and set savings goals with precision. It also features automatic expense categorization, real-time data visualization, and an advanced analytics dashboard offering detailed financial insights and performance metrics.',
     tools: ['React', 'Node.js', 'Express', 'MongoDB']
   }
 ]
