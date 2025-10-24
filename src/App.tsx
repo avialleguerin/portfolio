@@ -7,12 +7,18 @@ function App() {
   const [isScrolling, setIsScrolling] = useState(false)
   const [currentIndex, setCurrentIndex] = useState(0) // 0: home, 1: projects, 2: contact
   let touchStartY = 0
+  const [sectionAnim, setSectionAnim] = useState<{[k:number]: string}>({ 0: '', 1: '', 2: '' })
 
   useEffect(() => {
     // Force scroll to top on load
     window.scrollTo(0, 0)
+    setCurrentIndex(0)
     if ('scrollRestoration' in history) {
       history.scrollRestoration = 'manual'
+    }
+    // Remove any hash from URL (e.g. #projects) to always start on home
+    if (window.location.hash) {
+      history.replaceState(null, document.title, window.location.pathname + window.location.search)
     }
   }, [])
 
@@ -84,7 +90,15 @@ function App() {
   const goToSection = (sectionIndex: number) => {
     if (isScrolling) return
     setIsScrolling(true)
-    setCurrentIndex(sectionIndex)
+    const prev = currentIndex
+    const next = sectionIndex
+    setCurrentIndex(next)
+
+    // Determine direction and set animations
+    const goingDown = next > prev
+    const exitAnim = goingDown ? 'animate-fade-out-left' : 'animate-fade-out-right'
+    const enterAnim = goingDown ? 'animate-fade-in-right' : 'animate-fade-in-left'
+    setSectionAnim((a) => ({ ...a, [prev]: exitAnim, [next]: enterAnim }))
 
     if (sectionIndex === 0) {
       window.scrollTo({ top: 0, behavior: 'smooth' })
@@ -100,7 +114,11 @@ function App() {
       }
     }
     // after the smooth scroll likely finishes
-    setTimeout(() => setIsScrolling(false), 900)
+    setTimeout(() => {
+      setIsScrolling(false)
+      // Clear animations after they complete
+      setSectionAnim((a) => ({ ...a, [prev]: '', [next]: '' }))
+    }, 900)
   }
 
   return (
@@ -108,12 +126,13 @@ function App() {
       {/* Video Overlay */}
       <div className="fixed inset-0 bg-black/70 pointer-events-none z-0"></div>
       
-      <HomeSection 
+      <HomeSection className={sectionAnim[0]}
         onScrollToProjects={() => goToSection(1)} 
         onScrollToContact={() => goToSection(2)}
+        onLogoClick={() => goToSection(0)}
       />
-      <ProjectsSection onScrollToContact={() => goToSection(2)} />
-      <ContactSection />
+      <ProjectsSection className={sectionAnim[1]} onScrollToContact={() => goToSection(2)} onLogoClick={() => goToSection(0)} />
+      <ContactSection className={sectionAnim[2]} onLogoClick={() => goToSection(0)} />
     </div>
   )
 }

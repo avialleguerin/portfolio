@@ -5,7 +5,9 @@ import SocialLinks from './SocialLinks'
 import ScrollIndicator from './ScrollIndicator'
 import { CONTACT_EMAIL, EMAILJS_PUBLIC_KEY, EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID } from '../data/constants'
 
-const ContactSection = () => {
+interface ContactSectionProps { className?: string; onLogoClick?: () => void }
+
+const ContactSection = ({ className, onLogoClick }: ContactSectionProps) => {
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
@@ -81,13 +83,13 @@ const ContactSection = () => {
   return (
     <section 
       id="contact" 
-      className="min-h-screen bg-cover bg-center bg-no-repeat flex items-center justify-center relative overflow-hidden"
+      className={`min-h-screen bg-cover bg-center bg-no-repeat flex items-center justify-center relative overflow-hidden ${className || ''}`}
       style={{ backgroundImage: 'url(/background.jpg)' }}
     >
       {/* Overlay */}
       <div className="absolute inset-0 bg-black/80 z-0 pointer-events-none"></div>
       
-      <Logo />
+      <Logo onClick={onLogoClick} />
       <Navigation />
       <SocialLinks />
       <ScrollIndicator className="scroll-indicator-contact" />

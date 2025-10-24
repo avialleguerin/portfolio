@@ -6,19 +6,21 @@ import ScrollIndicator from './ScrollIndicator'
 interface HomeSectionProps {
   onScrollToProjects: () => void
   onScrollToContact: () => void
+  className?: string
+  onLogoClick?: () => void
 }
 
-const HomeSection = ({ onScrollToProjects, onScrollToContact }: HomeSectionProps) => {
+const HomeSection = ({ onScrollToProjects, onScrollToContact, className, onLogoClick }: HomeSectionProps) => {
   return (
     <section 
       id="home" 
-      className="min-h-screen bg-cover bg-center bg-no-repeat flex items-center justify-center relative overflow-hidden"
+      className={`min-h-screen bg-cover bg-center bg-no-repeat flex items-center justify-center relative overflow-hidden ${className || ''}`}
       style={{ backgroundImage: 'url(/background.jpg)' }}
     >
       {/* Overlay */}
       <div className="absolute inset-0 bg-black/80 z-0 pointer-events-none"></div>
       
-      <Logo />
+      <Logo onClick={onLogoClick} />
       <Navigation onProjectsClick={onScrollToProjects} onContactClick={onScrollToContact} />
 
       <main className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center z-10">
