@@ -20,12 +20,14 @@ const ScrollIndicator = ({ onClick, className = '' }: ScrollIndicatorProps) => {
 
   return (
     <div 
-      className={`scroll-indicator ${className}`}
+      className={`absolute bottom-[70px] right-[70px] flex flex-col items-center gap-5 z-[100] cursor-pointer ${className}`}
       onClick={handleClick}
-      style={{ cursor: 'pointer' }}
     >
-      <span>SCROLL</span>
-      <div className="scroll-line"></div>
+      {className.includes('projects') && (
+        <div className="w-[1px] h-[35px] bg-gradient-to-t from-white/50 to-transparent"></div>
+      )}
+      <span className="font-lagu font-medium [writing-mode:vertical-rl] text-[13px] tracking-[4px] text-white/50">SCROLL</span>
+      <div className="w-[1px] h-[35px] bg-gradient-to-b from-white/50 to-transparent"></div>
     </div>
   )
 }

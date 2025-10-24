@@ -5,6 +5,100 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Amandine - Web Designer</title>
     <link rel="icon" type="image/png" href="/favicon.png">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.cdnfonts.com/css/lemon-milk" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/harmonia-sans" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/lagu-sans" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'lemon': ['Lemon Milk', 'Arial', 'sans-serif'],
+                        'lagu': ['Lagu Sans', 'sans-serif'],
+                        'barlow': ['Barlow', 'sans-serif'],
+                        'caveat': ['Caveat', 'cursive'],
+                        'harmonia': ['Harmonia Sans', 'sans-serif']
+                    },
+                    animation: {
+                        'slide-to-center-right': 'slideLeftToCenter 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards',
+                        'slide-to-center-left': 'slideRightToCenter 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards',
+                        'slide-to-left': 'slideCenterToLeft 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards',
+                        'slide-to-right': 'slideCenterToRight 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards',
+                        'fade-out-left': 'fadeOutLeft 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards',
+                        'fade-out-right': 'fadeOutRight 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards',
+                        'fade-in-left': 'fadeInLeft 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards',
+                        'fade-in-right': 'fadeInRight 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards',
+                    },
+                    keyframes: {
+                        slideLeftToCenter: {
+                            'from': { transform: 'translateX(0) scale(0.8)', filter: 'blur(5px) brightness(0.6)' },
+                            'to': { transform: 'translateX(85%) scale(1)', filter: 'blur(0px) brightness(1)' }
+                        },
+                        slideRightToCenter: {
+                            'from': { transform: 'translateX(0) scale(0.8)', filter: 'blur(5px) brightness(0.6)' },
+                            'to': { transform: 'translateX(-85%) scale(1)', filter: 'blur(0px) brightness(1)' }
+                        },
+                        slideCenterToLeft: {
+                            'from': { transform: 'translateX(0) scale(1)', filter: 'blur(0px) brightness(1)' },
+                            'to': { transform: 'translateX(-85%) scale(0.8)', filter: 'blur(5px) brightness(0.6)' }
+                        },
+                        slideCenterToRight: {
+                            'from': { transform: 'translateX(0) scale(1)', filter: 'blur(0px) brightness(1)' },
+                            'to': { transform: 'translateX(85%) scale(0.8)', filter: 'blur(5px) brightness(0.6)' }
+                        },
+                        fadeOutLeft: {
+                            'from': { opacity: '1' },
+                            'to': { opacity: '0' }
+                        },
+                        fadeOutRight: {
+                            'from': { opacity: '1' },
+                            'to': { opacity: '0' }
+                        },
+                        fadeInLeft: {
+                            'from': { opacity: '0' },
+                            'to': { opacity: '1' }
+                        },
+                        fadeInRight: {
+                            'from': { opacity: '0' },
+                            'to': { opacity: '1' }
+                        },
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style type="text/tailwindcss">
+        @layer base {
+            html {
+                scroll-behavior: smooth;
+                scrollbar-width: none;
+                -ms-overflow-style: none;
+            }
+            html::-webkit-scrollbar {
+                display: none;
+            }
+            body {
+                scrollbar-width: none;
+                -ms-overflow-style: none;
+            }
+            body::-webkit-scrollbar {
+                display: none;
+            }
+        }
+    </style>
 </head>
 <body>
     <div id="root"></div>

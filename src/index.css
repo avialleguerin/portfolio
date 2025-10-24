@@ -1,25 +1,14 @@
-/* Import the original styles */
-@import url('../style.css');
+/* Tailwind CSS is now loaded via CDN in index.html */
+/* All styles are now utility classes in components */
 
-/* Import Font Awesome */
-@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css');
-
-/* Import Google Fonts */
-@import url('https://fonts.cdnfonts.com/css/lemon-milk');
-@import url('https://fonts.cdnfonts.com/css/harmonia-sans');
-@import url('https://fonts.cdnfonts.com/css/lagu-sans');
-@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600&display=swap');
-
-/* Basic resets */
+/* Only keep essential global styles */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-html, body, #root {
+#root {
   width: 100%;
-  height: 100%;
-  overflow-x: hidden;
+  min-height: 100vh;
 }

@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import HomeSection from './components/HomeSection'
 import ProjectsSection from './components/ProjectsSection'
-import './App.css'
 
 function App() {
   const [isScrolling, setIsScrolling] = useState(false)
@@ -53,11 +52,13 @@ function App() {
   }
 
   return (
-    <>
-      <div className="video-overlay"></div>
+    <div className="font-lemon bg-[#191b1f] text-white min-h-screen w-full overflow-x-hidden overflow-y-scroll relative">
+      {/* Video Overlay */}
+      <div className="fixed inset-0 bg-black/70 pointer-events-none z-0"></div>
+      
       <HomeSection onScrollToProjects={() => goToSection(1)} />
       <ProjectsSection />
-    </>
+    </div>
   )
 }
 
