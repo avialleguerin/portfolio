@@ -19,6 +19,17 @@
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
     
+    <!-- Antario Bold font (provide your own file in /public or root). Fallbacks to sans-serif if missing. -->
+    <style>
+        @font-face {
+            font-family: 'Antario';
+            src: url('/Antario-Bold.woff2') format('woff2'); /* Place Antario-Bold.woff2 at the site root */
+            font-weight: 700;
+            font-style: normal;
+            font-display: swap;
+        }
+    </style>
+    
     <!-- Tailwind Config -->
     <script>
         tailwind.config = {
@@ -29,7 +40,8 @@
                         'lagu': ['Lagu Sans', 'sans-serif'],
                         'barlow': ['Barlow', 'sans-serif'],
                         'caveat': ['Caveat', 'cursive'],
-                        'harmonia': ['Harmonia Sans', 'sans-serif']
+                        'harmonia': ['Harmonia Sans', 'sans-serif'],
+                        'antario': ['Antario', 'Barlow', 'sans-serif']
                     },
                     animation: {
                         'slide-to-center-right': 'slideLeftToCenter 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards',

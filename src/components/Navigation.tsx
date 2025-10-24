@@ -2,13 +2,17 @@ import { NAV_LINKS } from '../data/constants'
 
 interface NavigationProps {
   onProjectsClick?: () => void
+  onContactClick?: () => void
 }
 
-const Navigation = ({ onProjectsClick }: NavigationProps) => {
+const Navigation = ({ onProjectsClick, onContactClick }: NavigationProps) => {
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     if (href === '#projects' && onProjectsClick) {
       e.preventDefault()
       onProjectsClick()
+    } else if (href === '#contact' && onContactClick) {
+      e.preventDefault()
+      onContactClick()
     }
   }
 

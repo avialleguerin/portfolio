@@ -4,7 +4,11 @@ import SocialLinks from './SocialLinks'
 import ScrollIndicator from './ScrollIndicator'
 import ProjectCarousel from './ProjectCarousel'
 
-const ProjectsSection = () => {
+interface ProjectsSectionProps {
+  onScrollToContact?: () => void
+}
+
+const ProjectsSection = ({ onScrollToContact }: ProjectsSectionProps) => {
   return (
     <section 
       id="projects" 
@@ -15,7 +19,7 @@ const ProjectsSection = () => {
       <div className="absolute inset-0 bg-black/80 z-0 pointer-events-none"></div>
       
       <Logo />
-      <Navigation />
+      <Navigation onContactClick={onScrollToContact} />
       <SocialLinks />
       <ScrollIndicator className="scroll-indicator-projects" />
       <ProjectCarousel />

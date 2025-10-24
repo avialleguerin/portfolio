@@ -15,6 +15,12 @@ export const SOCIAL_LINKS: SocialLink[] = [
     url: 'https://www.linkedin.com/in/avg38/',
     icon: 'fab fa-linkedin-in',
     label: 'LinkedIn'
+  },
+  {
+    url: '/CV%20-%20Amandine%20VIALLE-GUERIN.pdf',
+    icon: 'fas fa-file-alt',
+    label: 'Download CV',
+    download: true
   }
 ]
 

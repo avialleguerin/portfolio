@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import HomeSection from './components/HomeSection'
 import ProjectsSection from './components/ProjectsSection'
+import ContactSection from './components/ContactSection'
 
 function App() {
   const [isScrolling, setIsScrolling] = useState(false)
@@ -47,6 +48,11 @@ function App() {
       if (projectsSection) {
         projectsSection.scrollIntoView({ behavior: 'smooth', block: 'start' })
       }
+    } else if (sectionIndex === 2) {
+      const contactSection = document.getElementById('contact')
+      if (contactSection) {
+        contactSection.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      }
     }
     setTimeout(() => setIsScrolling(false), 800)
   }
@@ -56,8 +62,12 @@ function App() {
       {/* Video Overlay */}
       <div className="fixed inset-0 bg-black/70 pointer-events-none z-0"></div>
       
-      <HomeSection onScrollToProjects={() => goToSection(1)} />
-      <ProjectsSection />
+      <HomeSection 
+        onScrollToProjects={() => goToSection(1)} 
+        onScrollToContact={() => goToSection(2)}
+      />
+      <ProjectsSection onScrollToContact={() => goToSection(2)} />
+      <ContactSection />
     </div>
   )
 }
