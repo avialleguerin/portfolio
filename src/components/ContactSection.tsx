@@ -104,25 +104,25 @@ const ContactSection = ({ className, onLogoClick, onProjectsClick }: ContactSect
           </h1>
           
           <p className="font-antario font-bold text-white/70  mb-16">
-            Don't hesitate to contact me to discuss your projects, collaborations or simply to exchange. I will be happy to respond to you as soon as possible.
+            Feel free to reach me to discuss about your projects or collaborations. I will be happy to respond to you as soon as possible.
           </p>
 
           {/* Contact Details */}
           <div className="space-y-10">
-            {/* Adresse */}
+            {/* Address */}
             <div>
               <h3 className="font-antario text-md font-bold tracking-[3px] text-white mb-3">
-                Adresse
+                Address
               </h3>
               <p className="font-antario text-base font-bold text-white/60">
                 Lyon, France
               </p>
             </div>
 
-            {/* Téléphone */}
+            {/* Phone */}
             <div>
               <h3 className="font-antario text-md font-bold tracking-[3px] text-white mb-3">
-                Téléphone
+                Phone
               </h3>
               <a 
                 href="tel:+33612345678" 

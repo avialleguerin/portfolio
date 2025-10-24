@@ -1,3 +1,4 @@
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import type { Project } from '../types'
 
 interface ProjectDetailProps {
@@ -6,29 +7,103 @@ interface ProjectDetailProps {
 }
 
 const ProjectDetail = ({ project, onBack }: ProjectDetailProps) => {
+  // Build the image array: use project.images if provided, else fallback to single image
+  const images = useMemo(() => (project.images && project.images.length > 0 ? project.images : [project.image]), [project.images, project.image])
+  const [currentIndex, setCurrentIndex] = useState(0)
+  const [isLightboxOpen, setIsLightboxOpen] = useState(false)
+  // Button to focus when the modal opens
+  const closeBtnRef = useRef<HTMLButtonElement | null>(null)
+  const modalRef = useRef<HTMLDivElement | null>(null)
+  const backBtnRef = useRef<HTMLButtonElement | null>(null)
+
+  const openLightbox = useCallback((index: number) => {
+    setCurrentIndex(index)
+    setIsLightboxOpen(true)
+  }, [])
+
+  const closeLightbox = useCallback(() => setIsLightboxOpen(false), [])
+
+  const showPrev = useCallback(() => setCurrentIndex((i) => (i - 1 + images.length) % images.length), [images.length])
+  const showNext = useCallback(() => setCurrentIndex((i) => (i + 1) % images.length), [images.length])
+
+  // Keyboard navigation when lightbox is open
+  useEffect(() => {
+    if (!isLightboxOpen) return
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') closeLightbox()
+      if (e.key === 'ArrowLeft') showPrev()
+      if (e.key === 'ArrowRight') showNext()
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [isLightboxOpen, closeLightbox, showPrev, showNext])
+
+  // Prevent background scroll and interactions while modal is open and manage initial focus
+  useEffect(() => {
+    if (isLightboxOpen) {
+      const prevOverflow = document.body.style.overflow
+      const prevPointerEvents = document.body.style.pointerEvents
+      
+      // Block all interactions and scroll on the entire page
+      document.body.style.overflow = 'hidden'
+      document.body.style.pointerEvents = 'none'
+      
+      // Add a class to help with global blocking if needed
+      document.body.classList.add('modal-open')
+      
+      // focus close button next tick
+      const id = window.setTimeout(() => {
+        // Focus the primary action inside the modal
+        (backBtnRef.current ?? closeBtnRef.current)?.focus()
+      }, 0)
+      
+      return () => {
+        document.body.style.overflow = prevOverflow
+        document.body.style.pointerEvents = prevPointerEvents
+        document.body.classList.remove('modal-open')
+        window.clearTimeout(id)
+      }
+    }
+  }, [isLightboxOpen])
+
   return (
     <div className="relative w-full h-full">
       {/* Content layout inspired by the provided design */}
-      <div className="relative z-10 w-full h-full flex items-center justify-center px-8">
+      <div
+        className={`relative z-10 w-full h-full flex items-center justify-center px-8 ${
+          isLightboxOpen ? 'pointer-events-none select-none' : ''
+        }`}
+        aria-hidden={isLightboxOpen}
+        {...(isLightboxOpen ? { inert: '' as unknown as boolean } : {})}
+      >
         <div className="w-full max-w-7xl grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           
-          {/* Left side: Stacked images like in the reference */}
+          {/* Left side: Gallery with main image and thumbnails */}
           <div className="relative">
-            {/* Main project image */}
+            {/* Main project image (clickable to open lightbox) */}
             <div className="relative w-full max-w-md mx-auto lg:mx-0">
               <div className="aspect-[4/3] bg-black/20 rounded-2xl overflow-hidden shadow-[0_25px_80px_rgba(0,0,0,0.6)] transform rotate-2">
-                <img src={project.image} alt={project.title} className="w-full h-full object-cover" />
+                <button
+                  type="button"
+                  onClick={() => openLightbox(currentIndex)}
+                  className="w-full h-full block cursor-zoom-in"
+                  aria-label="Open image in full screen"
+                >
+                  <img src={images[currentIndex]} alt={project.title} className="w-full h-full object-cover" />
+                </button>
+              </div>
+
+              {/* Decorative stacked images remain for visual interest */}
+              <div className="absolute -top-36 -left-32 w-72 h-52 bg-black/30 rounded-xl overflow-hidden shadow-[0_15px_40px_rgba(0,0,0,0.4)] transform -rotate-12 z-[-1]">
+                <img src={images[(currentIndex + images.length - 1) % images.length]} alt="" className="w-full h-full object-cover opacity-90" />
               </div>
               
-              {/* Secondary stacked images for visual interest */}
-              <div className="absolute -top-4 -left-6 w-32 h-24 bg-black/30 rounded-xl overflow-hidden shadow-[0_15px_40px_rgba(0,0,0,0.4)] transform -rotate-12 z-[-1]">
-                <img src={project.image} alt="" className="w-full h-full object-cover opacity-60" />
-              </div>
-              
-              <div className="absolute -bottom-6 -right-4 w-28 h-20 bg-black/30 rounded-xl overflow-hidden shadow-[0_15px_40px_rgba(0,0,0,0.4)] transform rotate-6 z-[-1]">
-                <img src={project.image} alt="" className="w-full h-full object-cover opacity-40" />
+              <div className="absolute -bottom-36 -right-32 w-72 h-52 bg-black/30 rounded-xl overflow-hidden shadow-[0_15px_40px_rgba(0,0,0,0.4)] transform rotate-6 z-[-1]">
+                <img src={images[(currentIndex + 1) % images.length]} alt="" className="w-full h-full object-cover opacity-90" />
               </div>
             </div>
+
+
           </div>
 
           {/* Right side: Content structured like the reference */}
@@ -44,26 +119,12 @@ const ProjectDetail = ({ project, onBack }: ProjectDetailProps) => {
               </p>
             </div>
 
-            {/* Tools/Features section */}
-            <div className="grid grid-cols-3 gap-6 pt-8">
-              {(project.tools || []).slice(0, 3).map((tool) => (
-                <div key={tool} className="text-center">
-                  <div className="w-12 h-12 mx-auto mb-3 bg-white/5 rounded-full flex items-center justify-center border border-white/10">
-                    <div className="w-6 h-6 bg-white/20 rounded-full"></div>
-                  </div>
-                  <div className="text-xs font-lagu tracking-[2px] text-white/80 uppercase">
-                    {tool}
-                  </div>
-                </div>
-              ))}
-            </div>
-
             {/* All tools list */}
-            {(project.tools || []).length > 3 && (
+            {(project.tools || []) && (
               <div className="pt-4">
-                <div className="text-xs font-lagu tracking-[3px] text-white/60 uppercase mb-3">Additional Tools</div>
+                <div className="text-xs font-lagu tracking-[3px] text-white/60 uppercase mb-3">STACK</div>
                 <div className="flex flex-wrap gap-2">
-                  {(project.tools || []).slice(3).map((tool) => (
+                  {(project.tools || []).map((tool) => (
                     <span key={tool} className="text-xs tracking-wider uppercase bg-white/5 text-white/70 border border-white/10 rounded-full px-3 py-1">
                       {tool}
                     </span>
@@ -86,6 +147,112 @@ const ProjectDetail = ({ project, onBack }: ProjectDetailProps) => {
           </div>
         </div>
       </div>
+      {/* Lightbox modal */}
+      {isLightboxOpen && (
+        <div
+          className="fixed inset-0 z-[9999] bg-black/85 backdrop-blur-sm flex items-center justify-center p-4"
+          role="dialog"
+          aria-modal="true"
+          aria-label={`${project.title} images viewer`}
+          style={{ pointerEvents: 'auto' }}
+          onMouseDown={(e) => e.stopPropagation()}
+          onClick={(e) => {
+            // prevent accidental propagation; clicking background does not close unless we add explicit close-on-backdrop
+            e.stopPropagation()
+          }}
+          ref={modalRef}
+          onKeyDown={(e) => {
+            if (e.key !== 'Tab') return
+            const container = modalRef.current
+            if (!container) return
+            const focusable = Array.from(
+              container.querySelectorAll<HTMLElement>(
+                'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+              )
+            ).filter((el) => !el.hasAttribute('disabled'))
+            if (focusable.length === 0) return
+            const first = focusable[0]
+            const last = focusable[focusable.length - 1]
+            if (e.shiftKey) {
+              if (document.activeElement === first) {
+                e.preventDefault()
+                last.focus()
+              }
+            } else {
+              if (document.activeElement === last) {
+                e.preventDefault()
+                first.focus()
+              }
+            }
+          }}
+        >
+          {/* Close cross removed as requested */}
+
+          {/* Prev/Next buttons moved next to the central image */}
+
+          <div className="w-full max-w-5xl">
+            <div className="relative aspect-[16/10] bg-black/20 rounded-xl overflow-hidden shadow-[0_25px_80px_rgba(0,0,0,0.6)]">
+              <img src={images[currentIndex]} alt="" className="w-full h-full object-contain rounded-xl" />
+              {images.length > 1 && (
+                <>
+                  <button
+                    type="button"
+                    onClick={showPrev}
+                    aria-label="Previous image"
+                    className="absolute left-3 top-1/2 -translate-y-1/2 text-white/90 hover:text-white bg-white/10 hover:bg-white/20 backdrop-blur-sm w-10 h-10 rounded-full flex items-center justify-center"
+                  >
+                    ‹
+                  </button>
+                  <button
+                    type="button"
+                    onClick={showNext}
+                    aria-label="Next image"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-white/90 hover:text-white bg-white/10 hover:bg-white/20 backdrop-blur-sm w-10 h-10 rounded-full flex items-center justify-center"
+                  >
+                    ›
+                  </button>
+                </>
+              )}
+            </div>
+            
+            {/* Thumbnails strip inside lightbox */}
+            {images.length > 1 && (
+              <div className="mt-6 flex justify-center gap-3 overflow-x-auto pb-2 max-w-full">
+                <div className="flex gap-3">
+                  {images.map((src, i) => (
+                    <button
+                      key={src + i}
+                      type="button"
+                      onClick={() => setCurrentIndex(i)}
+                      className={`relative w-20 h-16 flex-shrink-0 rounded-lg overflow-hidden border ${
+                        i === currentIndex ? 'border-white/80' : 'border-white/20 hover:border-white/50'
+                      } transition-all duration-200`}
+                      aria-label={`Show image ${i + 1}`}
+                    >
+                      <img src={src} alt="" className="w-full h-full object-cover" />
+                      {i === currentIndex && (
+                        <span className="absolute inset-0 ring-2 ring-white/90 rounded-lg pointer-events-none" />
+                      )}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+            
+            {/* Back to project page button inside lightbox */}
+            <div className="mt-6 flex justify-center">
+              <button
+                type="button"
+                onClick={closeLightbox}
+                ref={backBtnRef}
+                className="font-lagu font-medium py-[12px] px-[28px] text-xs tracking-[3px] text-white/80 bg-[#1a1a1a] border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.4)] cursor-pointer transition-all duration-300 uppercase hover:text-white hover:bg-[#2a2a2a] hover:border-white/20 hover:shadow-[0_12px_40px_rgba(0,0,0,0.6)] rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-white/80"
+              >
+                ← Back to project page
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
