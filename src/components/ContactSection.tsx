@@ -214,12 +214,9 @@ const ContactSection = ({ className, onLogoClick }: ContactSectionProps) => {
             <div className="pt-6">
               <button
                 type="submit"
-                className="font-lagu font-medium py-[15px] px-[50px] text-sm tracking-[3px] text-white/80 bg-[#222] border-none
-                          shadow-[5px_8px_20px_rgba(0,0,0,0.4)] cursor-pointer transition-all duration-300 uppercase pointer-events-auto
-                          hover:text-white hover:bg-[#333] hover:shadow-[6px_10px_25px_rgba(0,0,0,0.5)] disabled:opacity-60 disabled:cursor-not-allowed inline-flex items-center gap-3"
+                className="font-lagu font-medium py-[14px] px-[32px] text-xs tracking-[3px] text-white/80 bg-[#1a1a1a] border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.4)] cursor-pointer transition-all duration-300 uppercase hover:text-white hover:bg-[#2a2a2a] hover:border-white/20 hover:shadow-[0_12px_40px_rgba(0,0,0,0.6)] rounded-lg"
                 disabled={isSending}
-              >{isSending ? 'ENVOI...' : 'SEND MESSAGE'} <img src="/send.png" alt="Arrow" className="inline-block w-5 h-5" />
-              </button>
+              >{isSending ? 'ENVOI...' : 'SEND MESSAGE'} →</button>
             </div>
             {status.message && (
               <div className={`mt-4 text-sm ${status.type === 'success' ? 'text-green-400' : 'text-red-400'}`}>

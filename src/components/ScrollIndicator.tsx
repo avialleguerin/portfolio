@@ -24,10 +24,9 @@ const ScrollIndicator = ({ onClick, className = '' }: ScrollIndicatorProps) => {
       onClick={handleClick}
     >
       {(() => {
-        const isProjects = className.includes('projects')
         const isContact = className.includes('contact')
-        // Show top line for projects and contact. For contact, we are moving the line above with inverted gradient
-        if (isProjects || isContact) {
+        // Show top line only for contact page
+        if (isContact) {
           return <div className="w-[1px] h-[35px] bg-gradient-to-t from-white/50 to-transparent"></div>
         }
         return null

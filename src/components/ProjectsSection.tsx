@@ -3,6 +3,9 @@ import Navigation from './Navigation'
 import SocialLinks from './SocialLinks'
 import ScrollIndicator from './ScrollIndicator'
 import ProjectCarousel from './ProjectCarousel'
+import ProjectDetail from './ProjectDetail'
+import { useState } from 'react'
+import type { Project } from '../types'
 
 interface ProjectsSectionProps {
   onScrollToContact?: () => void
@@ -11,6 +14,8 @@ interface ProjectsSectionProps {
 }
 
 const ProjectsSection = ({ onScrollToContact, className, onLogoClick }: ProjectsSectionProps) => {
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null)
+
   return (
     <section 
       id="projects" 
@@ -20,11 +25,21 @@ const ProjectsSection = ({ onScrollToContact, className, onLogoClick }: Projects
       {/* Overlay */}
       <div className="absolute inset-0 bg-black/80 z-0 pointer-events-none"></div>
       
-      <Logo onClick={onLogoClick} />
+      <Logo onClick={selectedProject ? () => setSelectedProject(null) : onLogoClick} />
       <Navigation onContactClick={onScrollToContact} />
       <SocialLinks />
       <ScrollIndicator className="scroll-indicator-projects" />
-      <ProjectCarousel />
+
+      {/* Crossfade containers */}
+      <div className={`absolute inset-0 flex items-center justify-center transition-opacity duration-500 ${selectedProject ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
+        <ProjectCarousel onViewProject={(project) => setSelectedProject(project)} />
+      </div>
+
+      <div className={`absolute inset-0 transition-opacity duration-500 ${selectedProject ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
+        {selectedProject && (
+          <ProjectDetail project={selectedProject} onBack={() => setSelectedProject(null)} />
+        )}
+      </div>
     </section>
   )
 }

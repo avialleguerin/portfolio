@@ -2,7 +2,11 @@ import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { PROJECTS } from '../data/constants'
 import type { Project } from '../types'
 
-const ProjectCarousel = () => {
+interface ProjectCarouselProps {
+  onViewProject?: (project: Project) => void
+}
+
+const ProjectCarousel = ({ onViewProject }: ProjectCarouselProps) => {
   const [currentProjectIndex, setCurrentProjectIndex] = useState(1)
   const [isRotating, setIsRotating] = useState(false)
   const [animationClass, setAnimationClass] = useState<{
@@ -39,19 +43,11 @@ const ProjectCarousel = () => {
     img.src = src
   }
 
-  const forceReflow = (selector: string) => {
-    const el = document.querySelector(selector) as HTMLElement | null
-    // reading offsetHeight forces a reflow to ensure class changes are applied on separate frames
-    if (el) void el.offsetHeight
-  }
-
   const leftProject = getProjectAtIndex(-1)
   const centerProject = getProjectAtIndex(0)
   const rightProject = getProjectAtIndex(1)
 
-  const nextFrame = (cb: () => void) => {
-    requestAnimationFrame(() => requestAnimationFrame(cb))
-  }
+  const nextFrame = (cb: () => void) => requestAnimationFrame(() => requestAnimationFrame(cb))
 
   const rotateLeft = () => {
     if (isRotating) return
@@ -116,28 +112,45 @@ const ProjectCarousel = () => {
     }, 600)
   }
 
-  // Ensure pre-opacity is applied before paint on the new side after index change
+  // Ensure fade-in is in place right after index change and only after image is decoded
   useLayoutEffect(() => {
     const side = pendingFadeRef.current
     if (!side) return
     const token = animTokenRef.current
-    // Apply opacity-0 synchronously before paint
-    setAnimationClass((prev) => ({ ...prev, [side]: 'opacity-0' }))
-    // Force reflow on the target element
-    forceReflow(side === 'right' ? '.project-bg-right' : '.project-bg-left')
-    // Next frame, start fade-in from opacity-0
-    nextFrame(() => {
+    const containerSelector = side === 'right' ? '.project-bg-right' : '.project-bg-left'
+    const imgEl = document.querySelector(`${containerSelector} img`) as HTMLImageElement | null
+
+    const startFade = () => {
       if (animTokenRef.current !== token) return
-      setAnimationClass((prev) => ({ ...prev, [side]: `opacity-0 fade-in-${side}` }))
-      finalizeTimerRef.current = window.setTimeout(() => {
+      // Start from opacity-0 then next frame trigger fade-in to avoid flash
+      setAnimationClass((prev) => ({ ...prev, [side]: 'opacity-0' }))
+      nextFrame(() => {
         if (animTokenRef.current !== token) return
-        const clickBlocker = document.querySelector('.click-blocker')
-        if (clickBlocker) clickBlocker.classList.remove('active')
-        setIsRotating(false)
-        setAnimationClass((prev) => ({ ...prev, [side]: '' }))
-        pendingFadeRef.current = null
-      }, 600)
-    })
+        setAnimationClass((prev) => ({ ...prev, [side]: `opacity-0 fade-in-${side}` }))
+        finalizeTimerRef.current = window.setTimeout(() => {
+          if (animTokenRef.current !== token) return
+          const clickBlocker = document.querySelector('.click-blocker')
+          if (clickBlocker) clickBlocker.classList.remove('active')
+          setIsRotating(false)
+          setAnimationClass((prev) => ({ ...prev, [side]: '' }))
+          pendingFadeRef.current = null
+        }, 600)
+      })
+    }
+
+    if (imgEl && imgEl.complete) {
+      startFade()
+    } else if (imgEl) {
+      const onLoad = () => {
+        imgEl.removeEventListener('load', onLoad)
+        startFade()
+      }
+      imgEl.addEventListener('load', onLoad)
+      return () => imgEl.removeEventListener('load', onLoad)
+    } else {
+      // Fallback if no element found
+      startFade()
+    }
   }, [currentProjectIndex])
 
   return (
@@ -146,7 +159,7 @@ const ProjectCarousel = () => {
       <div className="m-auto flex items-end justify-center px-20 z-[1] relative -top-20">
         {/* Left Project */}
         <div 
-          className={`project-bg-left flex-1 h-[50vh] w-[50vh] max-w-[50vh] overflow-hidden relative transition-[filter] duration-500 ease-in-out aspect-square
+          className={`project-bg-left rounded-2xl flex-1 h-[50vh] w-[50vh] max-w-[50vh] overflow-hidden relative transition-[filter] duration-500 ease-in-out aspect-square
                       blur-[1px] brightness-[0.6] scale-[0.8] origin-[center_bottom] mt-0 z-[2]
                       hover:blur-0 hover:brightness-[0.7] cursor-pointer
                       before:content-[''] before:absolute before:inset-0 before:bg-gradient-to-b before:from-transparent before:via-transparent before:to-[#222] before:z-10
@@ -157,7 +170,7 @@ const ProjectCarousel = () => {
         </div>
         
         {/* Center Project */}
-        <div className={`project-bg-center flex-[0_0_50vh] h-[50vh] w-[50vh] max-w-[50vh] min-w-[50vh] aspect-square overflow-hidden relative z-[3] -mx-20
+        <div className={`project-bg-center rounded-2xl flex-[0_0_50vh] h-[50vh] w-[50vh] max-w-[50vh] min-w-[50vh] aspect-square overflow-hidden relative z-[3] -mx-20
                         shadow-[0_20px_60px_rgba(0,0,0,0.5),0_10px_30px_rgba(0,0,0,0.3)] hover:scale-[1.02] transition-transform duration-300
                         before:content-[''] before:absolute before:inset-0 before:bg-gradient-to-b before:from-transparent before:via-transparent before:to-[#222] before:z-10
                         ${animationClass.center || ''}`}>
@@ -166,7 +179,7 @@ const ProjectCarousel = () => {
         
         {/* Right Project */}
         <div 
-          className={`project-bg-right flex-1 h-[50vh] w-[50vh] max-w-[50vh] overflow-hidden relative transition-[filter] duration-500 ease-in-out aspect-square
+          className={`project-bg-right rounded-2xl flex-1 h-[50vh] w-[50vh] max-w-[50vh] overflow-hidden relative transition-[filter] duration-500 ease-in-out aspect-square
                       blur-[1px] brightness-[0.6] scale-[0.8] origin-[center_bottom] mt-0 z-[2]
                       hover:blur-0 hover:brightness-[0.7] cursor-pointer
                       before:content-[''] before:absolute before:inset-0 before:bg-gradient-to-b before:from-transparent before:via-transparent before:to-[#222] before:z-10
@@ -187,9 +200,10 @@ const ProjectCarousel = () => {
           {centerProject.description}
         </p>
         
-        <button className="font-lagu font-medium py-[15px] px-[50px] text-sm tracking-[3px] text-white/80 bg-[#222] border-none
-                          shadow-[5px_8px_20px_rgba(0,0,0,0.4)] cursor-pointer transition-all duration-300 uppercase pointer-events-auto
-                          hover:text-white hover:bg-[#333] hover:shadow-[6px_10px_25px_rgba(0,0,0,0.5)]">
+        <button
+          onClick={() => onViewProject?.(centerProject)}
+          className="font-lagu font-medium py-[14px] px-[32px] text-xs tracking-[3px] text-white/80 bg-[#1a1a1a] border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.4)] cursor-pointer transition-all duration-300 uppercase hover:text-white hover:bg-[#2a2a2a] hover:border-white/20 hover:shadow-[0_12px_40px_rgba(0,0,0,0.6)] rounded-lg"
+        >
           VIEW PROJECT
         </button>
       </div>
