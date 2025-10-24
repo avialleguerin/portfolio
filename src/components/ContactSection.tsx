@@ -104,7 +104,7 @@ const ContactSection = ({ className, onLogoClick }: ContactSectionProps) => {
           </h1>
           
           <p className="font-antario font-bold text-white/70  mb-16">
-            N'hésitez pas à me contacter pour discuter de vos projets, collaborations ou simplement pour échanger. Je serai ravie de vous répondre dans les plus brefs délais.
+            Don't hesitate to contact me to discuss your projects, collaborations or simply to exchange. I will be happy to respond to you as soon as possible.
           </p>
 
           {/* Contact Details */}
