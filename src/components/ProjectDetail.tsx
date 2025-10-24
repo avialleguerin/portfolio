@@ -79,16 +79,16 @@ const ProjectDetail = ({ project, onBack }: ProjectDetailProps) => {
   }, [isLightboxOpen])
 
   return (
-    <div className="relative w-full h-full">
+    <div className="relative w-full min-h-screen flex items-center justify-center py-16">
       {/* Content layout inspired by the provided design */}
       <div
-        className={`relative z-10 w-full h-full flex items-center justify-center px-8 ${
+        className={`relative z-10 w-full max-w-7xl mx-auto px-8 ${
           isLightboxOpen ? 'pointer-events-none select-none' : ''
         }`}
         aria-hidden={isLightboxOpen}
         {...(isLightboxOpen ? { inert: '' as unknown as boolean } : {})}
       >
-        <div className="w-full max-w-7xl grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+        <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-32 items-center justify-items-center">
           
           {/* Left side: Gallery with main image and thumbnails */}
           <div className="relative">
