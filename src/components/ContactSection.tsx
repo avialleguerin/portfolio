@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Logo from './Logo'
 import Navigation from './Navigation'
 import SocialLinks from './SocialLinks'
@@ -15,6 +15,16 @@ const ContactSection = () => {
 
   const [isSending, setIsSending] = useState(false)
   const [status, setStatus] = useState<{ type: 'success' | 'error' | null; message: string }>({ type: null, message: '' })
+
+  // Auto-hide success message after 3 seconds
+  useEffect(() => {
+    if (status.type === 'success') {
+      const t = setTimeout(() => {
+        setStatus({ type: null, message: '' })
+      }, 3000)
+      return () => clearTimeout(t)
+    }
+  }, [status.type])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()

@@ -4,9 +4,9 @@ import type { Project, NavLink, SocialLink } from '../types'
 export const CONTACT_EMAIL = 'avialleguerin@gmail.com'
 
 // EmailJS configuration (fill these with your EmailJS credentials)
-export const EMAILJS_PUBLIC_KEY = '' // e.g. 'your_public_key'
-export const EMAILJS_SERVICE_ID = '' // e.g. 'service_xxx'
-export const EMAILJS_TEMPLATE_ID = '' // e.g. 'template_xxx'
+export const EMAILJS_PUBLIC_KEY = 'TDAxP9tnbeob6kwBI' // e.g. 'your_public_key'
+export const EMAILJS_SERVICE_ID = 'service_kwxbuek' // e.g. 'service_xxx'
+export const EMAILJS_TEMPLATE_ID = 'template_garo0xm' // e.g. 'template_xxx'
 
 export const NAV_LINKS: NavLink[] = [
   { href: '#projects', label: 'PROJECTS' },
