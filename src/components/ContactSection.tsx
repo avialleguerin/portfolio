@@ -5,9 +5,9 @@ import SocialLinks from './SocialLinks'
 import ScrollIndicator from './ScrollIndicator'
 import { CONTACT_EMAIL, EMAILJS_PUBLIC_KEY, EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID } from '../data/constants'
 
-interface ContactSectionProps { className?: string; onLogoClick?: () => void }
+interface ContactSectionProps { className?: string; onLogoClick?: () => void; onProjectsClick?: () => void }
 
-const ContactSection = ({ className, onLogoClick }: ContactSectionProps) => {
+const ContactSection = ({ className, onLogoClick, onProjectsClick }: ContactSectionProps) => {
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
@@ -90,9 +90,9 @@ const ContactSection = ({ className, onLogoClick }: ContactSectionProps) => {
       <div className="absolute inset-0 bg-black/80 z-0 pointer-events-none"></div>
       
       <Logo onClick={onLogoClick} />
-      <Navigation />
+      <Navigation onProjectsClick={onProjectsClick} />
       <SocialLinks />
-      <ScrollIndicator className="scroll-indicator-contact" />
+      <ScrollIndicator className="scroll-indicator-contact" onClick={onLogoClick} />
 
       {/* Contact Content - Two Columns */}
       <div className="relative z-10 w-full max-w-[90rem] m-auto grid grid-cols-2 gap-20">
@@ -148,8 +148,7 @@ const ContactSection = ({ className, onLogoClick }: ContactSectionProps) => {
         </div>
 
         {/* Right Column - Contact Form */}
-        <div className="text-center my-auto font-antario py-[40px] px-[50px] tracking-[3px] text-white/80 bg-[#222] border-none
-                          shadow-[5px_8px_20px_rgba(0,0,0,0.4)] uppercase">
+        <div className="font-lagu py-[50px] px-[50px] text-xs text-center tracking-[3px] text-white/80 bg-[#1a1a1a] border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.4)] rounded-lg">
           {/* <h2 className="font-lemon text-[50px] font-black tracking-[6px] text-white mb-12 [text-shadow:0_15px_40px_rgba(0,0,0,0.9)]">
             CONTACT FORM
           </h2> */}

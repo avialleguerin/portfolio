@@ -132,7 +132,7 @@ function App() {
         onLogoClick={() => goToSection(0)}
       />
       <ProjectsSection className={sectionAnim[1]} onScrollToContact={() => goToSection(2)} onLogoClick={() => goToSection(0)} />
-      <ContactSection className={sectionAnim[2]} onLogoClick={() => goToSection(0)} />
+      <ContactSection className={sectionAnim[2]} onLogoClick={() => goToSection(0)} onProjectsClick={() => goToSection(1)} />
     </div>
   )
 }

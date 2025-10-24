@@ -28,7 +28,7 @@ const ProjectsSection = ({ onScrollToContact, className, onLogoClick }: Projects
       <Logo onClick={selectedProject ? () => setSelectedProject(null) : onLogoClick} />
       <Navigation onContactClick={onScrollToContact} />
       <SocialLinks />
-      <ScrollIndicator className="scroll-indicator-projects" />
+      <ScrollIndicator className="scroll-indicator-projects" onClick={onScrollToContact} />
 
       {/* Crossfade containers */}
       <div className={`absolute inset-0 flex items-center justify-center transition-opacity duration-500 ${selectedProject ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
