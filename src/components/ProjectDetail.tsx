@@ -26,16 +26,28 @@ const ProjectDetail = ({ project, onBack }: ProjectDetailProps) => {
   const showPrev = useCallback(() => setCurrentIndex((i) => (i - 1 + images.length) % images.length), [images.length])
   const showNext = useCallback(() => setCurrentIndex((i) => (i + 1) % images.length), [images.length])
 
-  // Keyboard navigation when lightbox is open
+  // Keyboard navigation and scroll handling when lightbox is open
   useEffect(() => {
     if (!isLightboxOpen) return
+    
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') closeLightbox()
       if (e.key === 'ArrowLeft') showPrev()
       if (e.key === 'ArrowRight') showNext()
     }
+    
+    const onScroll = () => {
+      // Close lightbox on any scroll
+      closeLightbox()
+    }
+    
     window.addEventListener('keydown', onKey)
-    return () => window.removeEventListener('keydown', onKey)
+    window.addEventListener('scroll', onScroll, { passive: true })
+    
+    return () => {
+      window.removeEventListener('keydown', onKey)
+      window.removeEventListener('scroll', onScroll)
+    }
   }, [isLightboxOpen, closeLightbox, showPrev, showNext])
 
   // Prevent background scroll and interactions while modal is open and manage initial focus
@@ -82,25 +94,35 @@ const ProjectDetail = ({ project, onBack }: ProjectDetailProps) => {
           <div className="relative">
             {/* Main project image (clickable to open lightbox) */}
             <div className="relative w-full max-w-md mx-auto lg:mx-0">
-              <div className="aspect-[4/3] bg-black/20 rounded-2xl overflow-hidden shadow-[0_25px_80px_rgba(0,0,0,0.6)] transform rotate-2">
+              <div className="aspect-[4/3] bg-black/20 rounded-2xl overflow-hidden shadow-[0_25px_80px_rgba(0,0,0,0.6)] transform rotate-2 hover:scale-[1.02] transition-transform duration-300">
                 <button
                   type="button"
-                  onClick={() => openLightbox(currentIndex)}
+                  onClick={() => openLightbox(0)} // Always open first image by default
                   className="w-full h-full block cursor-zoom-in"
                   aria-label="Open image in full screen"
                 >
-                  <img src={images[currentIndex]} alt={project.title} className="w-full h-full object-cover" />
+                  <img src={project.image} alt={project.title} className="w-full h-full object-cover" />
                 </button>
               </div>
 
-              {/* Decorative stacked images remain for visual interest */}
-              <div className="absolute -top-36 -left-32 w-72 h-52 bg-black/30 rounded-xl overflow-hidden shadow-[0_15px_40px_rgba(0,0,0,0.4)] transform -rotate-12 z-[-1]">
-                <img src={images[(currentIndex + images.length - 1) % images.length]} alt="" className="w-full h-full object-cover opacity-90" />
-              </div>
+              {/* Decorative stacked images - always show first 3 images */}
+              <button 
+                type="button"
+                onClick={() => openLightbox(1 % images.length)}
+                className="absolute -top-36 -left-32 w-72 h-52 bg-black/30 rounded-xl overflow-hidden shadow-[0_15px_40px_rgba(0,0,0,0.4)] transform -rotate-12 z-[-1] hover:scale-[1.02] transition-transform duration-300"
+                aria-label="Open image in full screen"
+              >
+                <img src={images[1 % images.length]} alt="" className="w-full h-full object-cover opacity-90" />
+              </button>
               
-              <div className="absolute -bottom-36 -right-32 w-72 h-52 bg-black/30 rounded-xl overflow-hidden shadow-[0_15px_40px_rgba(0,0,0,0.4)] transform rotate-6 z-[-1]">
-                <img src={images[(currentIndex + 1) % images.length]} alt="" className="w-full h-full object-cover opacity-90" />
-              </div>
+              <button 
+                type="button"
+                onClick={() => openLightbox(2 % images.length)}
+                className="absolute -bottom-36 -right-32 w-72 h-52 bg-black/30 rounded-xl overflow-hidden shadow-[0_15px_40px_rgba(0,0,0,0.4)] transform rotate-6 z-[-1] hover:scale-[1.02] transition-transform duration-300"
+                aria-label="Open image in full screen"
+              >
+                <img src={images[2 % images.length]} alt="" className="w-full h-full object-cover opacity-90" />
+              </button>
             </div>
 
 
