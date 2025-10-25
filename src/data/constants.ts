@@ -35,7 +35,7 @@ export const SOCIAL_LINKS: SocialLink[] = [
 export const PROJECTS: Project[] = [
   {
     image: '/project1.png',
-    images: ['/project1-1.png', '/project1-2.png', '/project1-3.png', '/project1-4.png', '/project1-5.png', '/project1-6.png', '/project1-7.png', 'project1-8.png'],
+    images: ['/project1-1.png', '/project1-2.png', '/project1-3.png'],
     title: 'FINANCE TRACKER',
     summary: 'Full-stack personal finance management web application — transaction management, budgets, savings objectives, automatic categorization, CSV import, and advanced analytics dashboard.',
     description: 'I developed a personal finance web app using TypeScript. It lets users add, edit, and delete their transactions, import data from CSV files, and attach images to each entry. The app helps manage budgets and savings goals, and it automatically sorts transactions by keywords. It also shows clear statistics with charts and summaries. Data is visualized with Recharts, while Zustand manages the app’s state. The project includes setup tools, database scripts, and file storage for uploaded images.',
