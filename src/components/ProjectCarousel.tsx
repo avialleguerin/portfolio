@@ -13,6 +13,7 @@ const ProjectCarousel = ({ onViewProject }: ProjectCarouselProps) => {
     left?: string
     center?: string
     right?: string
+    content?: string
   }>({})
 
   // Refs to prevent overlapping/double animations
@@ -64,7 +65,10 @@ const ProjectCarousel = ({ onViewProject }: ProjectCarouselProps) => {
 
     // increment token to invalidate any pending callbacks
     const token = ++animTokenRef.current
+    
+    // Fade out content first
     setAnimationClass({
+      content: 'opacity-0',
       left: 'fade-out-left',
       center: 'slide-to-left',
       right: 'slide-to-center-left'
@@ -95,7 +99,10 @@ const ProjectCarousel = ({ onViewProject }: ProjectCarouselProps) => {
     preloadImage(PROJECTS[incomingLeft].image)
 
     const token = ++animTokenRef.current
+    
+    // Fade out content first
     setAnimationClass({
+      content: 'opacity-0',
       left: 'slide-to-center-right',
       center: 'slide-to-right',
       right: 'fade-out-right'
@@ -126,13 +133,17 @@ const ProjectCarousel = ({ onViewProject }: ProjectCarouselProps) => {
       setAnimationClass((prev) => ({ ...prev, [side]: 'opacity-0' }))
       nextFrame(() => {
         if (animTokenRef.current !== token) return
-        setAnimationClass((prev) => ({ ...prev, [side]: `opacity-0 fade-in-${side}` }))
+        setAnimationClass((prev) => ({
+          ...prev,
+          [side]: `opacity-0 fade-in-${side}`,
+          content: 'opacity-0 fade-in-content'
+        }))
         finalizeTimerRef.current = window.setTimeout(() => {
           if (animTokenRef.current !== token) return
           const clickBlocker = document.querySelector('.click-blocker')
           if (clickBlocker) clickBlocker.classList.remove('active')
           setIsRotating(false)
-          setAnimationClass((prev) => ({ ...prev, [side]: '' }))
+          setAnimationClass((prev) => ({ ...prev, [side]: '', content: '' }))
           pendingFadeRef.current = null
         }, 600)
       })
@@ -195,20 +206,22 @@ const ProjectCarousel = ({ onViewProject }: ProjectCarouselProps) => {
 
       {/* Main Project Content - Tout en dessous de l'image */}
       <div className="absolute top-[65%] left-1/2 -translate-x-1/2 text-center z-10 w-full max-w-4xl px-10">
-        <h1 className="font-lemon text-[70px] font-black tracking-[4px] text-white mb-8 [text-shadow:0_10px_30px_rgba(0,0,0,0.8)] leading-[1.1] pointer-events-none">
-          {centerProject.title}
-        </h1>
-        
-        <p className="font-antario font-bold text-lg text-[#c9c9c9e6] leading-[1.6] mb-10 [text-shadow:0_2px_10px_rgba(0,0,0,0.8)] pointer-events-none">
-          {centerProject.summary}
-        </p>
-        
-        <button
-          onClick={() => onViewProject?.(centerProject)}
-          className="font-lagu font-medium py-[14px] px-[32px] text-xs tracking-[3px] text-white/80 bg-[#1a1a1a] border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.4)] cursor-pointer transition-all duration-300 uppercase hover:text-white hover:bg-[#2a2a2a] hover:border-white/20 hover:shadow-[0_12px_40px_rgba(0,0,0,0.6)] rounded-lg"
-        >
-          VIEW PROJECT
-        </button>
+        <div className={`transition-opacity duration-500 ${animationClass.content || ''}`}>
+          <h1 className="font-lemon text-[70px] font-black tracking-[4px] text-white mb-8 [text-shadow:0_10px_30px_rgba(0,0,0,0.8)] leading-[1.1] pointer-events-none">
+            {centerProject.title}
+          </h1>
+          
+          <p className="font-antario font-bold text-lg text-[#c9c9c9e6] leading-[1.6] mb-10 [text-shadow:0_2px_10px_rgba(0,0,0,0.8)] pointer-events-none">
+            {centerProject.summary}
+          </p>
+          
+          <button
+            onClick={() => onViewProject?.(centerProject)}
+            className="font-lagu font-medium py-[14px] px-[32px] text-xs tracking-[3px] text-white/80 bg-[#1a1a1a] border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.4)] cursor-pointer transition-all duration-300 uppercase hover:text-white hover:bg-[#2a2a2a] hover:border-white/20 hover:shadow-[0_12px_40px_rgba(0,0,0,0.6)] rounded-lg"
+          >
+            VIEW PROJECT
+          </button>
+        </div>
       </div>
 
       {/* Click Blocker */}
@@ -217,6 +230,13 @@ const ProjectCarousel = ({ onViewProject }: ProjectCarouselProps) => {
       <style>{`
         .click-blocker.active {
           pointer-events: auto;
+        }
+        .fade-in-content {
+          animation: fadeIn 500ms ease-out forwards;
+        }
+        @keyframes fadeIn {
+          from { opacity: 0; }
+          to { opacity: 1; }
         }
       `}</style>
     </>

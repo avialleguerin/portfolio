@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import Logo from './Logo'
 import Navigation from './Navigation'
 import SocialLinks from './SocialLinks'
@@ -11,6 +12,30 @@ interface HomeSectionProps {
 }
 
 const HomeSection = ({ onScrollToProjects, onScrollToContact, className, onLogoClick }: HomeSectionProps) => {
+  const [currentPhraseIndex, setCurrentPhraseIndex] = useState(0)
+  const [isVisible, setIsVisible] = useState(true)
+
+  const phrases = [
+    "42 STUDENT\nBUILDING THE FUTURE",
+    "FUTURE FOUNDER\nDESIGNING IMPACT",
+    "WEB CREATOR\nSHAPING IDEAS"
+  ]
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      // Fade out
+      setIsVisible(false)
+      
+      // After fade out, change the phrase and fade in
+      setTimeout(() => {
+        setCurrentPhraseIndex((prev) => (prev + 1) % phrases.length)
+        setIsVisible(true)
+      }, 500) // Half second for fade out
+      
+    }, 3000) // Change phrase every 3 seconds
+    
+    return () => clearInterval(interval)
+  }, [phrases.length])
   return (
     <section 
       id="home" 
@@ -28,9 +53,18 @@ const HomeSection = ({ onScrollToProjects, onScrollToContact, className, onLogoC
         <h1 className="font-lemon text-[120px] font-black tracking-[12px] text-white mb-8 [text-shadow:0_15px_40px_rgba(0,0,0,0.9)] leading-[1.1]">
           AMANDINE
         </h1>
-        <p className="font-lagu font-light w-[50%] text-left absolute right-0 text-sm tracking-[8px] text-white/80 leading-[1.8] [text-shadow:0_5px_20px_rgba(0,0,0,0.8)]">
-          A JUNIOR<br />WEB DESIGNER
-        </p>
+        <div className="font-lagu font-light w-full text-left absolute right-0 text-sm tracking-[8px] text-white/80 leading-[1.8] [text-shadow:0_5px_20px_rgba(0,0,0,0.8)] min-h-[4.5rem]">
+          <div 
+            className={`transition-opacity duration-500 ${isVisible ? 'opacity-100' : 'opacity-0'}`}
+            style={{ position: 'absolute', right: 0, width: '50%' }}
+          >
+            {phrases[currentPhraseIndex].split('\n').map((line, i) => (
+              <p key={i} className="m-0">
+                {line}
+              </p>
+            ))}
+          </div>
+        </div>
       </main>
 
       <SocialLinks />
