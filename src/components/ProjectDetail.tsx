@@ -175,7 +175,12 @@ const ProjectDetail = ({ project, onBack }: ProjectDetailProps) => {
           aria-modal="true"
           aria-label={`${project.title} images viewer`}
           style={{ pointerEvents: 'auto', cursor: 'pointer' }}
-          onClick={closeLightbox}
+          onClick={(e) => {
+            // Ne fermer la lightbox que si le clic est sur l'arrière-plan
+            if (e.target === e.currentTarget) {
+              closeLightbox();
+            }
+          }}
           ref={modalRef}
           onKeyDown={(e) => {
             if (e.key !== 'Tab') return

@@ -53,7 +53,7 @@ export const PROJECTS: Project[] = [
     image: '/project3.png',
     images: ['/project3-1.png', '/project3-2.png', '/project3-3.png'],
     title: 'TROUVE ENTREPRISE',
-    summary: 'Plateforme SaaS pour extraire, organiser et gérer des fiches d’entreprises (adresses, téléphones, sites, etc.) depuis des sources géographiques. Comprend un moteur d’extractions, historique d’imports, gestion des statuts et prise de notes collaborative.',
+    summary: 'Plateforme SaaS pour extraire, organiser et gérer des fiches d’entreprises depuis des sources géographiques.',
     description: 'Développement complet d’une application web dédiée à la recherche et à la gestion de prospects locaux. L’outil permet d’extraire en masse des lieux (export TSV), de les stocker et trier, d’afficher l’avancement des extractions en temps réel, de gérer des statuts (contacté, à contacter…), et d’ajouter des notes utilisateur par lieu. Intégration complète avec Supabase pour l’authentification, le stockage (fichiers TSV, avatars), et la base de données. Interface d’administration et pages marketing (landing, pricing). Gestion des profils utilisateurs, réinitialisation de mot de passe, et import/export pour workflows commerciaux.',
     tools: ['Nuxt 4', 'TypeScript', 'TailwindCSS', 'Supabase (auth, storage, db)', 'Pinia', 'Nuxt UI', 'Lucide (icônes)', 'ofetch/$fetch', 'Turf.js', 'reka-ui']
   },
