@@ -67,10 +67,10 @@ export const PROJECTS: Project[] = [
   },
   {
     image: '/project5.png',
-    images: ['/project5-1.png', '/project5-2.png', '/project5-3.png'],
+    images: ['/project5-1.png', '/project5-2.png', '/project5-3.png', '/project5-4.png'],
     title: 'LABUAN BAJO EXPLORER',
-    summary: 'Travel and tour booking website for boat trips in Indonesia — multi-day tour packages, island exploration, Komodo National Park visits, local guide services, and interactive trip planning.',
-    description: 'I developed a travel website for a local boat tour operator in Labuan Bajo, Indonesia. The site showcases various trip packages (2-day, 3-day, and 4-day tours) to explore the beautiful islands around Komodo National Park. Users can browse detailed tour information, view stunning gallery images, read customer reviews, and easily contact the guide via WhatsApp integration. The website features responsive design with modern UI, interactive hero sections, tour comparison cards, and location mapping. Built with clean HTML, CSS, and JavaScript, it provides an immersive experience highlighting local marine life, pristine beaches, and adventure activities like snorkeling with manta rays and visiting the famous Pink Beach.',
-    tools: ['HTML5', 'CSS3', 'JavaScript', 'TailwindCSS', 'Google Maps API', 'WhatsApp API', 'Responsive Design', 'Modern UI/UX']
+    summary: 'Travel and tour booking website for boat trips in Indonesia.',
+    description: 'I developed a travel website for a local boat tour operator in Labuan Bajo, Indonesia. The site showcases various trip packages to explore the beautiful islands around Komodo National Park. The website features responsive design with modern UI, interactive hero sections, tour comparison cards, and location mapping.',
+    tools: ['HTML', 'CSS', 'JavaScript', 'TailwindCSS']
   }
 ]
