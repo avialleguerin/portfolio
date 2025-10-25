@@ -44,18 +44,18 @@ export const PROJECTS: Project[] = [
   {
     image: '/project2.png',
     images: ['/project2-1.png', '/project2-2.png', '/project2-3.png'],
-    title: 'TROUVE ENTREPRISE',
-    summary: 'Plateforme SaaS pour extraire, organiser et gérer des fiches d’entreprises (adresses, téléphones, sites, etc.) depuis des sources géographiques. Comprend un moteur d’extractions, historique d’imports, gestion des statuts et prise de notes collaborative.',
-    description: 'Développement complet d’une application web dédiée à la recherche et à la gestion de prospects locaux. L’outil permet d’extraire en masse des lieux (export TSV), de les stocker et trier, d’afficher l’avancement des extractions en temps réel, de gérer des statuts (contacté, à contacter…), et d’ajouter des notes utilisateur par lieu. Intégration complète avec Supabase pour l’authentification, le stockage (fichiers TSV, avatars), et la base de données. Interface d’administration et pages marketing (landing, pricing). Gestion des profils utilisateurs, réinitialisation de mot de passe, et import/export pour workflows commerciaux.',
+    title: 'TRIBOS',
+    summary: 'Application mobile pour se motiver entre amis et suivre ses activités sportives.',
+    description: 'Développement complet d’une application mobile dédiée à la gestion des activités sportives. L’outil permet de suivre des activités, de les partager entre amis, et de les visualiser sur une carte. Intégration complète avec Supabase pour l’authentification, le stockage (fichiers TSV, avatars), et la base de données. Interface d’administration et pages marketing (landing, pricing). Gestion des profils utilisateurs, réinitialisation de mot de passe, et import/export pour workflows commerciaux.',
     tools: ['Nuxt 4', 'TypeScript', 'TailwindCSS', 'Supabase (auth, storage, db)', 'Pinia', 'Nuxt UI', 'Lucide (icônes)', 'ofetch/$fetch', 'Turf.js', 'reka-ui'] 
   },
   {
     image: '/project3.png',
     images: ['/project3-1.png', '/project3-2.png', '/project3-3.png'],
-    title: 'SPORT MOBILE APP',
-    summary: 'Portfolio web developed in total autonomy. Includes a transaction management system, budgets, savings objectives, automatic categorization and an advanced statistics dashboard.',
-    description: 'Fully autonomous development of a complete web portfolio application. The platform features a robust transaction management system, dynamic budgeting tools, customizable savings goals, and automated expense categorization. It also includes an interactive dashboard providing detailed analytics and advanced financial statistics for comprehensive tracking and decision-making.',
-    tools: ['React', 'Node.js', 'Express', 'MongoDB']
+    title: 'TROUVE ENTREPRISE',
+    summary: 'Plateforme SaaS pour extraire, organiser et gérer des fiches d’entreprises (adresses, téléphones, sites, etc.) depuis des sources géographiques. Comprend un moteur d’extractions, historique d’imports, gestion des statuts et prise de notes collaborative.',
+    description: 'Développement complet d’une application web dédiée à la recherche et à la gestion de prospects locaux. L’outil permet d’extraire en masse des lieux (export TSV), de les stocker et trier, d’afficher l’avancement des extractions en temps réel, de gérer des statuts (contacté, à contacter…), et d’ajouter des notes utilisateur par lieu. Intégration complète avec Supabase pour l’authentification, le stockage (fichiers TSV, avatars), et la base de données. Interface d’administration et pages marketing (landing, pricing). Gestion des profils utilisateurs, réinitialisation de mot de passe, et import/export pour workflows commerciaux.',
+    tools: ['Nuxt 4', 'TypeScript', 'TailwindCSS', 'Supabase (auth, storage, db)', 'Pinia', 'Nuxt UI', 'Lucide (icônes)', 'ofetch/$fetch', 'Turf.js', 'reka-ui']
   },
   {
     image: '/project4.png',
