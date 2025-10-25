@@ -15,6 +15,7 @@ const ProjectCarousel = ({ onViewProject }: ProjectCarouselProps) => {
     right?: string
     content?: string
   }>({})
+  const [preloadedImages, setPreloadedImages] = useState<Set<string>>(new Set())
 
   // Refs to prevent overlapping/double animations
   const mainTimerRef = useRef<number | null>(null)
@@ -39,18 +40,29 @@ const ProjectCarousel = ({ onViewProject }: ProjectCarouselProps) => {
   }
 
   const preloadImage = (src: string) => {
-    if (!src) return
-    const img = new Image()
-    img.src = src
+    if (!src || preloadedImages.has(src)) return
+    
+    return new Promise<void>((resolve) => {
+      const img = new Image()
+      img.onload = () => {
+        setPreloadedImages(prev => new Set(prev).add(src))
+        resolve()
+      }
+      // Handle image loading errors
+      const errorHandler: EventListener = () => {
+        img.removeEventListener('error', errorHandler)
+        resolve()
+      }
+      img.addEventListener('error', errorHandler)
+      img.src = src
+    })
   }
 
   const leftProject = getProjectAtIndex(-1)
   const centerProject = getProjectAtIndex(0)
   const rightProject = getProjectAtIndex(1)
 
-  const nextFrame = (cb: () => void) => requestAnimationFrame(() => requestAnimationFrame(cb))
-
-  const rotateLeft = () => {
+  const rotateLeft = async () => {
     if (isRotating) return
     setIsRotating(true)
 
@@ -61,10 +73,15 @@ const ProjectCarousel = ({ onViewProject }: ProjectCarouselProps) => {
     const len = PROJECTS.length
     const cur = currentProjectIndex
     const incomingRight = (cur + 2) % len
-    preloadImage(PROJECTS[incomingRight].image)
+    
+    // Wait for the next image to be fully loaded before starting animation
+    await preloadImage(PROJECTS[incomingRight].image)
 
     // increment token to invalidate any pending callbacks
     const token = ++animTokenRef.current
+    
+    // Force reflow to ensure the browser registers the initial state
+    void document.body.offsetHeight
     
     // Fade out content first
     setAnimationClass({
@@ -76,16 +93,26 @@ const ProjectCarousel = ({ onViewProject }: ProjectCarouselProps) => {
 
     mainTimerRef.current = window.setTimeout(() => {
       if (animTokenRef.current !== token) return
-      // Moving carousel to the left: right project becomes center => increment index
-      pendingFadeRef.current = 'right'
-      setCurrentProjectIndex((prev) => (prev + 1) % PROJECTS.length)
-      // Clear only the classes that just finished
-      setAnimationClass((prev) => ({ ...prev, left: '', center: '' }))
-      // Fade-in is handled in useLayoutEffect synced with index change
+      
+      // Update the state in a single batch
+      requestAnimationFrame(() => {
+        // Moving carousel to the left: right project becomes center => increment index
+        pendingFadeRef.current = 'right'
+        setCurrentProjectIndex((prev) => (prev + 1) % PROJECTS.length)
+        
+        // Clear only the classes that just finished
+        setAnimationClass(prev => ({
+          ...prev, 
+          left: '', 
+          center: '',
+          // Force opacity-0 to prevent flash before fade-in
+          right: 'opacity-0'
+        }))
+      })
     }, 600)
   }
 
-  const rotateRight = () => {
+  const rotateRight = async () => {
     if (isRotating) return
     setIsRotating(true)
 
@@ -96,9 +123,14 @@ const ProjectCarousel = ({ onViewProject }: ProjectCarouselProps) => {
     const len = PROJECTS.length
     const cur = currentProjectIndex
     const incomingLeft = (cur - 2 + len) % len
-    preloadImage(PROJECTS[incomingLeft].image)
+    
+    // Wait for the next image to be fully loaded before starting animation
+    await preloadImage(PROJECTS[incomingLeft].image)
 
     const token = ++animTokenRef.current
+    
+    // Force reflow to ensure the browser registers the initial state
+    void document.body.offsetHeight
     
     // Fade out content first
     setAnimationClass({
@@ -110,12 +142,22 @@ const ProjectCarousel = ({ onViewProject }: ProjectCarouselProps) => {
 
     mainTimerRef.current = window.setTimeout(() => {
       if (animTokenRef.current !== token) return
-      // Moving carousel to the right: left project becomes center => decrement index
-      pendingFadeRef.current = 'left'
-      setCurrentProjectIndex((prev) => (prev - 1 + PROJECTS.length) % PROJECTS.length)
-      // Clear only finished ones
-      setAnimationClass((prev) => ({ ...prev, center: '', right: '' }))
-      // Fade-in is handled in useLayoutEffect synced with index change
+      
+      // Update the state in a single batch
+      requestAnimationFrame(() => {
+        // Moving carousel to the right: left project becomes center => decrement index
+        pendingFadeRef.current = 'left'
+        setCurrentProjectIndex((prev) => (prev - 1 + PROJECTS.length) % PROJECTS.length)
+        
+        // Clear only finished ones
+        setAnimationClass(prev => ({
+          ...prev, 
+          center: '', 
+          right: '',
+          // Force opacity-0 to prevent flash before fade-in
+          left: 'opacity-0'
+        }))
+      })
     }, 600)
   }
 
@@ -123,44 +165,77 @@ const ProjectCarousel = ({ onViewProject }: ProjectCarouselProps) => {
   useLayoutEffect(() => {
     const side = pendingFadeRef.current
     if (!side) return
+    
     const token = animTokenRef.current
     const containerSelector = side === 'right' ? '.project-bg-right' : '.project-bg-left'
     const imgEl = document.querySelector(`${containerSelector} img`) as HTMLImageElement | null
+    
+    // Force a reflow to ensure the initial state is applied
+    void document.body.offsetHeight
 
     const startFade = () => {
       if (animTokenRef.current !== token) return
-      // Start from opacity-0 then next frame trigger fade-in to avoid flash
-      setAnimationClass((prev) => ({ ...prev, [side]: 'opacity-0' }))
-      nextFrame(() => {
-        if (animTokenRef.current !== token) return
-        setAnimationClass((prev) => ({
+      
+      // Wait for the next frame to ensure the DOM has updated
+      requestAnimationFrame(() => {
+        // Start fade-in animation
+        setAnimationClass(prev => ({
           ...prev,
-          [side]: `opacity-0 fade-in-${side}`,
-          content: 'opacity-0 fade-in-content'
+          [side]: `fade-in-${side}`,
+          content: 'fade-in-content'
         }))
+        
+        // Set timeout to clean up after animation completes
         finalizeTimerRef.current = window.setTimeout(() => {
           if (animTokenRef.current !== token) return
+          
           const clickBlocker = document.querySelector('.click-blocker')
           if (clickBlocker) clickBlocker.classList.remove('active')
+          
+          // Reset all animation classes in one go
+          setAnimationClass(prev => ({
+            ...prev,
+            [side]: '',
+            content: ''
+          }))
+          
           setIsRotating(false)
-          setAnimationClass((prev) => ({ ...prev, [side]: '', content: '' }))
           pendingFadeRef.current = null
-        }, 600)
+        }, 600) // Match this with your CSS animation duration
       })
     }
 
-    if (imgEl && imgEl.complete) {
+    // If image is already loaded or doesn't exist, start fade immediately
+    if (!imgEl || (imgEl.complete && imgEl.naturalHeight !== 0)) {
       startFade()
     } else if (imgEl) {
+      // Otherwise wait for the image to load
       const onLoad = () => {
-        imgEl.removeEventListener('load', onLoad)
+        if (imgEl) {
+          imgEl.removeEventListener('load', onLoad)
+          imgEl.removeEventListener('error', onError)
+        }
         startFade()
       }
+      
+      const onError = () => {
+        if (imgEl) {
+          imgEl.removeEventListener('load', onLoad)
+          imgEl.removeEventListener('error', onError)
+        }
+        startFade() // Still continue even if image fails to load
+      }
+      
+      // Use standard event listeners for better browser compatibility
       imgEl.addEventListener('load', onLoad)
-      return () => imgEl.removeEventListener('load', onLoad)
-    } else {
-      // Fallback if no element found
-      startFade()
+      imgEl.addEventListener('error', onError)
+      
+      return () => {
+        if (imgEl) {
+          imgEl.removeEventListener('load', onLoad)
+          imgEl.removeEventListener('error', onError)
+        }
+      }
     }
   }, [currentProjectIndex])
 
