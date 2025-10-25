@@ -79,53 +79,51 @@ const ProjectDetail = ({ project, onBack }: ProjectDetailProps) => {
   }, [isLightboxOpen])
 
   return (
-    <div className="relative w-full min-h-screen flex items-center justify-center py-16">
+    <div className="relative w-full min-h-screen flex items-center justify-center py-24">
       {/* Content layout inspired by the provided design */}
       <div
-        className={`relative z-10 w-full max-w-7xl mx-auto px-8 ${
+        className={`relative w-full max-w-7xl mx-auto px-8 ${
           isLightboxOpen ? 'pointer-events-none select-none' : ''
         }`}
         aria-hidden={isLightboxOpen}
         {...(isLightboxOpen ? { inert: '' as unknown as boolean } : {})}
       >
-        <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-32 items-center justify-items-center">
+        <div className="relative w-full grid grid-cols-1 lg:grid-cols-2 gap-32 items-center justify-items-center">
           
           {/* Left side: Gallery with main image and thumbnails */}
-          <div className="relative">
+          <div className="relative w-full max-w-md mx-auto lg:mx-0">
             {/* Main project image (clickable to open lightbox) */}
-            <div className="relative w-full max-w-md mx-auto lg:mx-0">
-              <div className="aspect-[4/3] bg-black/20 rounded-2xl overflow-hidden shadow-[0_25px_80px_rgba(0,0,0,0.6)] transform rotate-2 hover:scale-[1.02] transition-transform duration-300">
+            <div className="relative z-10">
+              <div className="aspect-[4/3] bg-black/20 border border-white/10 rounded-2xl overflow-hidden shadow-[0_25px_80px_rgba(0,0,0,0.6)] transform rotate-2 hover:scale-[1.02] transition-transform duration-300">
                 <button
                   type="button"
-                  onClick={() => openLightbox(0)} // Always open first image by default
+                  onClick={() => openLightbox(0)}
                   className="w-full h-full block cursor-zoom-in"
                   aria-label="Open image in full screen"
                 >
-                  <img src={project.image} alt={project.title} className="w-full h-full object-cover" />
+                  <img src={images[0]} alt={project.title} className="w-full h-full object-cover" />
                 </button>
               </div>
-
-              {/* Decorative stacked images - always show first 3 images */}
-              <button 
-                type="button"
-                onClick={() => openLightbox(1 % images.length)}
-                className="absolute -top-36 -left-32 w-72 h-52 bg-black/30 rounded-xl overflow-hidden shadow-[0_15px_40px_rgba(0,0,0,0.4)] transform -rotate-12 z-[-1] hover:scale-[1.02] transition-transform duration-300"
-                aria-label="Open image in full screen"
-              >
-                <img src={images[1 % images.length]} alt="" className="w-full h-full object-cover opacity-90" />
-              </button>
-              
-              <button 
-                type="button"
-                onClick={() => openLightbox(2 % images.length)}
-                className="absolute -bottom-36 -right-32 w-72 h-52 bg-black/30 rounded-xl overflow-hidden shadow-[0_15px_40px_rgba(0,0,0,0.4)] transform rotate-6 z-[-1] hover:scale-[1.02] transition-transform duration-300"
-                aria-label="Open image in full screen"
-              >
-                <img src={images[2 % images.length]} alt="" className="w-full h-full object-cover opacity-90" />
-              </button>
             </div>
 
-
+            {/* Decorative stacked images - always show first 3 images */}
+            <button 
+              type="button"
+              onClick={() => openLightbox(1 % images.length)}
+              className="absolute -top-36 -left-32 w-72 h-52 border border-white/10 rounded-xl overflow-hidden shadow-[0_15px_40px_rgba(0,0,0,0.4)] transform -rotate-12 z-20 hover:scale-[1.02] transition-transform duration-300"
+              aria-label="Open image in full screen"
+            >
+              <img src={images[1 % images.length]} alt="" className="w-full h-full object-cover" />
+            </button>
+            
+            <button 
+              type="button"
+              onClick={() => openLightbox(2 % images.length)}
+              className="absolute -bottom-36 -right-32 w-72 h-52 rounded-xl overflow-hidden shadow-[0_15px_40px_rgba(0,0,0,0.4)] transform rotate-6 z-20 hover:scale-[1.02] transition-transform duration-300"
+              aria-label="Open image in full screen"
+            >
+              <img src={images[2 % images.length]} alt="" className="w-full h-full object-cover" />
+            </button>
           </div>
 
           {/* Right side: Content structured like the reference */}
@@ -176,12 +174,8 @@ const ProjectDetail = ({ project, onBack }: ProjectDetailProps) => {
           role="dialog"
           aria-modal="true"
           aria-label={`${project.title} images viewer`}
-          style={{ pointerEvents: 'auto' }}
-          onMouseDown={(e) => e.stopPropagation()}
-          onClick={(e) => {
-            // prevent accidental propagation; clicking background does not close unless we add explicit close-on-backdrop
-            e.stopPropagation()
-          }}
+          style={{ pointerEvents: 'auto', cursor: 'pointer' }}
+          onClick={closeLightbox}
           ref={modalRef}
           onKeyDown={(e) => {
             if (e.key !== 'Tab') return

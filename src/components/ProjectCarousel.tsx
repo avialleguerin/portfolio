@@ -170,10 +170,13 @@ const ProjectCarousel = ({ onViewProject }: ProjectCarouselProps) => {
         </div>
         
         {/* Center Project */}
-        <div className={`project-bg-center rounded-2xl flex-[0_0_50vh] h-[50vh] w-[50vh] max-w-[50vh] min-w-[50vh] aspect-square overflow-hidden relative z-[3] -mx-20
-                        shadow-[0_20px_60px_rgba(0,0,0,0.5),0_10px_30px_rgba(0,0,0,0.3)] hover:scale-[1.02] transition-transform duration-300
-                        before:content-[''] before:absolute before:inset-0 before:bg-gradient-to-b before:from-transparent before:via-transparent before:to-[#222] before:z-10
-                        ${animationClass.center || ''}`}>
+        <div 
+          className={`project-bg-center rounded-2xl flex-[0_0_50vh] h-[50vh] w-[50vh] max-w-[50vh] min-w-[50vh] aspect-square overflow-hidden relative z-[3] -mx-20
+                      shadow-[0_20px_60px_rgba(0,0,0,0.5),0_10px_30px_rgba(0,0,0,0.3)] hover:scale-[1.02] transition-transform duration-300
+                      before:content-[''] before:absolute before:inset-0 before:bg-gradient-to-b before:from-transparent before:via-transparent before:to-[#222] before:z-10
+                      cursor-pointer ${animationClass.center || ''}`}
+          onClick={() => onViewProject?.(centerProject)}
+        >
           <img src={centerProject.image} alt={centerProject.title} className="w-full h-full object-cover block" />
         </div>
         
