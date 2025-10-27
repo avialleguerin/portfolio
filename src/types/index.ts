@@ -7,6 +7,8 @@ export interface Project {
   summary: string
   description: string
   tools?: string[]
+  // Optional link to the project (GitHub, live demo, etc.)
+  link?: string
 }
 
 export interface NavLink {

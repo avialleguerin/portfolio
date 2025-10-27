@@ -171,9 +171,24 @@ const ProjectDetail = ({ project, currentProjectIndex, totalProjects, isActive =
               <div className="text-[10px] xs:text-xs font-lagu tracking-[3px] sm:tracking-[4px] text-white/60 uppercase mb-3 sm:mb-4">
                 — About project
               </div>
-              <h1 className="font-lemon text-xl xs:text-2xl sm:text-4xl lg:text-5xl text-white leading-tight tracking-[1px] sm:tracking-[2px] mb-4 sm:mb-6">
+              <h1 className="font-lemon text-xl xs:text-2xl sm:text-4xl lg:text-5xl text-white leading-tight tracking-[1px] sm:tracking-[2px] mb-3 sm:mb-4">
                 {project.title}
               </h1>
+              {project.link && (
+                <div className="mb-3 sm:mb-4">
+                  <a 
+                    href={project.link} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center text-sm sm:text-base text-blue-400 hover:text-blue-300 transition-colors duration-300"
+                  >
+                    <span className="font-lagu text-sm">{project.link}</span>
+                    <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
+                  </a>
+                </div>
+              )}
               <p className="font-antario text-base sm:text-lg text-[#c9c9c9e6] leading-relaxed max-w-lg">
                 {project.description}
               </p>
