@@ -3,10 +3,14 @@ import type { Project } from '../types'
 
 interface ProjectDetailProps {
   project: Project
+  currentProjectIndex: number
+  totalProjects: number
+  isActive?: boolean
   onBack?: () => void
+  onNavigateProject?: (direction: 'prev' | 'next') => void
 }
 
-const ProjectDetail = ({ project, onBack }: ProjectDetailProps) => {
+const ProjectDetail = ({ project, currentProjectIndex, totalProjects, isActive = false, onBack, onNavigateProject }: ProjectDetailProps) => {
   // Build the image array: use project.images if provided, else fallback to single image
   const images = useMemo(() => (project.images && project.images.length > 0 ? project.images : [project.image]), [project.images, project.image])
   const [currentIndex, setCurrentIndex] = useState(0)
@@ -167,6 +171,58 @@ const ProjectDetail = ({ project, onBack }: ProjectDetailProps) => {
           </div>
         </div>
       </div>
+      
+      {/* Fixed Navigation Dots with Arrows - Only show when project detail is active and visible */}
+      {onNavigateProject && totalProjects > 1 && project && isActive && (
+        <div className="fixed bottom-8 left-0 right-0 flex justify-center z-10">
+          <div className="flex items-center space-x-6">
+            {/* Left Arrow */}
+            <button
+              onClick={() => onNavigateProject('prev')}
+              className="text-white/70 hover:text-white transition-colors duration-200"
+              aria-label="Previous project"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M15 18l-6-6 6-6" />
+              </svg>
+            </button>
+            
+            {/* Dots */}
+            <div className="flex space-x-3">
+              {Array.from({ length: totalProjects }).map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => {
+                    const direction = index > currentProjectIndex ? 'next' : 'prev';
+                    let clicks = Math.abs(index - currentProjectIndex);
+                    while (clicks > 0) {
+                      onNavigateProject(direction);
+                      clicks--;
+                    }
+                  }}
+                  className={`h-2.5 rounded-full transition-all duration-300 ${
+                    index === currentProjectIndex ? 'bg-white w-8' : 'bg-white/30 w-2.5 hover:bg-white/50'
+                  }`}
+                  aria-label={`Go to project ${index + 1} of ${totalProjects}`}
+                  aria-current={index === currentProjectIndex ? 'step' : undefined}
+                />
+              ))}
+            </div>
+            
+            {/* Right Arrow */}
+            <button
+              onClick={() => onNavigateProject('next')}
+              className="text-white/70 hover:text-white transition-colors duration-200"
+              aria-label="Next project"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M9 18l6-6-6-6" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      )}
+      
       {/* Lightbox modal */}
       {isLightboxOpen && (
         <div

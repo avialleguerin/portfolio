@@ -4,8 +4,9 @@ import SocialLinks from './SocialLinks'
 import ScrollIndicator from './ScrollIndicator'
 import ProjectCarousel from './ProjectCarousel'
 import ProjectDetail from './ProjectDetail'
-import { useState } from 'react'
+import { useState, useMemo, useEffect, useRef } from 'react'
 import type { Project } from '../types'
+import { PROJECTS } from '../data/constants'
 
 interface ProjectsSectionProps {
   onScrollToContact?: () => void
@@ -14,10 +15,56 @@ interface ProjectsSectionProps {
 }
 
 const ProjectsSection = ({ onScrollToContact, className, onLogoClick }: ProjectsSectionProps) => {
-  const [selectedProject, setSelectedProject] = useState<Project | null>(null)
+  const [selectedProjectIndex, setSelectedProjectIndex] = useState<number | null>(null)
+  const [isSectionActive, setIsSectionActive] = useState(false)
+  const sectionRef = useRef<HTMLElement>(null)
+  
+  const selectedProject = useMemo(() => 
+    selectedProjectIndex !== null ? PROJECTS[selectedProjectIndex] : null, 
+    [selectedProjectIndex]
+  )
+  
+  const handleNavigateProject = (direction: 'prev' | 'next') => {
+    if (selectedProjectIndex === null) return
+    
+    const newIndex = direction === 'next' 
+      ? (selectedProjectIndex + 1) % PROJECTS.length
+      : (selectedProjectIndex - 1 + PROJECTS.length) % PROJECTS.length
+      
+    setSelectedProjectIndex(newIndex)
+  }
+  
+  const handleViewProject = (project: Project) => {
+    const index = PROJECTS.findIndex(p => p.title === project.title)
+    setSelectedProjectIndex(index >= 0 ? index : 0)
+  }
+
+  // Vérifie si la section est visible à l'écran
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsSectionActive(entry.isIntersecting)
+      },
+      {
+        root: null,
+        threshold: 0.5,
+      }
+    )
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current)
+    }
+
+    return () => {
+      if (sectionRef.current) {
+        observer.unobserve(sectionRef.current)
+      }
+    }
+  }, [])
 
   return (
     <section 
+      ref={sectionRef}
       id="projects" 
       className={`min-h-screen bg-cover bg-center bg-no-repeat flex items-center justify-center relative overflow-hidden ${className || ''}`}
       style={{ backgroundImage: 'url(/background.jpg)' }}
@@ -25,19 +72,26 @@ const ProjectsSection = ({ onScrollToContact, className, onLogoClick }: Projects
       {/* Overlay */}
       <div className="absolute inset-0 bg-black/80 z-0 pointer-events-none"></div>
       
-      <Logo onClick={selectedProject ? () => setSelectedProject(null) : onLogoClick} />
+      <Logo onClick={selectedProject ? () => setSelectedProjectIndex(null) : onLogoClick} />
       <Navigation onContactClick={onScrollToContact} />
       <SocialLinks />
       <ScrollIndicator className="scroll-indicator-projects" onClick={onScrollToContact} />
 
       {/* Crossfade containers */}
       <div className={`absolute inset-0 flex items-center justify-center transition-opacity duration-500 ${selectedProject ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
-        <ProjectCarousel onViewProject={(project) => setSelectedProject(project)} />
+        <ProjectCarousel onViewProject={handleViewProject} />
       </div>
 
       <div className={`absolute inset-0 transition-opacity duration-500 ${selectedProject ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
-        {selectedProject && (
-          <ProjectDetail project={selectedProject} onBack={() => setSelectedProject(null)} />
+        {selectedProject && selectedProjectIndex !== null && (
+          <ProjectDetail 
+            project={selectedProject} 
+            currentProjectIndex={selectedProjectIndex}
+            totalProjects={PROJECTS.length}
+            isActive={isSectionActive && selectedProject !== null}
+            onBack={() => setSelectedProjectIndex(null)}
+            onNavigateProject={handleNavigateProject}
+          />
         )}
       </div>
     </section>
