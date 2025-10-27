@@ -169,7 +169,7 @@ const ProjectDetail = ({ project, currentProjectIndex, totalProjects, isActive =
             {/* Header section */}
             <div>
               <div className="text-[10px] xs:text-xs font-lagu tracking-[3px] sm:tracking-[4px] text-white/60 uppercase mb-3 sm:mb-4">
-                — À propos du projet
+                — About project
               </div>
               <h1 className="font-lemon text-xl xs:text-2xl sm:text-4xl lg:text-5xl text-white leading-tight tracking-[1px] sm:tracking-[2px] mb-4 sm:mb-6">
                 {project.title}
@@ -183,7 +183,7 @@ const ProjectDetail = ({ project, currentProjectIndex, totalProjects, isActive =
             {(project.tools || []).length > 0 && (
               <div className="pt-2 sm:pt-4">
                 <div className="text-[10px] xs:text-xs font-lagu tracking-[2px] sm:tracking-[3px] text-white/60 uppercase mb-2 sm:mb-3">
-                  TECHNOLOGIES
+                  STACK
                 </div>
                 <div className="flex flex-wrap gap-1.5 sm:gap-2">
                   {(project.tools || []).map((tool) => (

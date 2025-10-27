@@ -107,12 +107,12 @@ const ContactSection = ({ className, onLogoClick, onProjectsClick }: ContactSect
             CONTACT
           </h1>
           
-          <p className="font-antario font-bold text-white/70 mb-8 sm:mb-16 px-4 sm:px-0">
+          <p className="font-antario font-bold text-[18px] text-white/70 mb-8 sm:mb-16 px-4 sm:px-0">
             Feel free to reach me to discuss about your projects or collaborations. I will be happy to respond to you as soon as possible.
           </p>
 
           {/* Contact Details - Hidden on mobile */}
-          <div className="hidden sm:block space-y-10">
+          <div className="hidden text-[18px] sm:block space-y-10">
             {/* Address */}
             <div>
               <h3 className="font-antario text-md font-bold tracking-[3px] text-white mb-3">
