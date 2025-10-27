@@ -54,7 +54,7 @@ export const PROJECTS: Project[] = [
     images: ['/project3-1.png', '/project3-2.png', '/project3-3.png'],
     title: 'FIND COMPANY',
     summary: 'SaaS platform to extract, organize, and manage business listings from geographic sources.',
-    description: 'Complete development of a web application dedicated to finding and managing local business leads. The tool allows for bulk extraction of locations (TSV export), storing and sorting them, displaying extraction progress in real-time, managing statuses (contacted, to contact, etc.), and adding user notes per location. Full integration with Supabase for authentication, storage (TSV files, avatars), and database. Includes admin interface and marketing pages (landing, pricing). User profile management, password reset, and import/export for business workflows.',
+    description: 'Development of a web app for finding and managing local business leads. Includes bulk location extraction (TSV export), real-time progress tracking, status management, user notes, and Supabase integration for authentication and storage.',
     tools: ['Nuxt 4', 'TypeScript', 'TailwindCSS', 'Supabase (auth, storage, db)', 'Pinia', 'Nuxt UI', 'Lucide (icônes)', 'ofetch/$fetch', 'Turf.js', 'reka-ui']
   },
   {

@@ -84,6 +84,7 @@ const ProjectDetail = ({ project, currentProjectIndex, totalProjects, isActive =
 
   return (
     <div className="relative w-full min-h-screen flex items-center justify-center py-12 sm:py-16 md:py-20 lg:py-24">
+      
       {/* Content layout */}
       <div
         className={`relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 ${
@@ -92,6 +93,18 @@ const ProjectDetail = ({ project, currentProjectIndex, totalProjects, isActive =
         aria-hidden={isLightboxOpen}
         {...(isLightboxOpen ? { inert: '' as unknown as boolean } : {})}
       >
+        {/* Back button */}
+        {onBack && (
+          <div className="pt-4 sm:pt-6">
+            <button
+              ref={backBtnRef}
+              onClick={onBack}
+              className="font-lagu md:hidden font-medium py-3 mb-4 px-6 sm:px-8 text-xs text-white/80 hover:text-white cursor-pointer uppercase sm:w-auto text-left"
+            >
+              ← Back to projects
+            </button>
+          </div>
+        )}
         <div className="relative w-full grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-16 lg:gap-32 items-center justify-items-center">
           
           {/* Left side: Gallery with main image and thumbnails */}
@@ -187,7 +200,7 @@ const ProjectDetail = ({ project, currentProjectIndex, totalProjects, isActive =
 
             {/* Back button */}
             {onBack && (
-              <div className="pt-4 sm:pt-6">
+              <div className="hidden md:block pt-4 sm:pt-6">
                 <button
                   ref={backBtnRef}
                   onClick={onBack}
