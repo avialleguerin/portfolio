@@ -1,6 +1,6 @@
 # Portfolio - Développeur Full Stack École 42
 
-Un portfolio moderne et responsive créé avec React, TypeScript, et Tailwind CSS, mettant en valeur les compétences et projets d'un développeur diplômé de l'École 42.
+Un portfolio moderne et responsive créé avec React, TypeScript, et Tailwind CSS, mettant en valeur les compétences et projets d'un développeur diplômé de l'École 42. Je me suis inspiré du design TURA. UI Design by Denys Turynskyi.
 
 ## 🚀 Fonctionnalités
 
@@ -164,36 +164,5 @@ src/
 - Formulaire de contact fonctionnel
 - Informations de contact
 - Liens sociaux
-
-## 🎯 Projets École 42 Inclus
-
-- **ft_transcendence** : Plateforme de jeu Pong avec chat et tournois
-- **minishell** : Reproduction d'un shell Unix
-- **webserv** : Serveur HTTP conforme RFC
-- **cub3d** : Moteur 3D avec raycasting
-- **push_swap** : Algorithme de tri optimisé
-- Et d'autres projets significatifs...
-
-## 📄 License
-
-Ce projet est sous licence MIT. Voir le fichier `LICENSE` pour plus de détails.
-
-## 🤝 Contribution
-
-Les contributions sont les bienvenues ! N'hésitez pas à :
-
-1. Fork le projet
-2. Créer une branche feature
-3. Commit vos changements
-4. Push vers la branche
-5. Ouvrir une Pull Request
-
-## 📞 Contact
-
-- **Email** : avialleguerin@gmail.com
-- **GitHub** : [@username](https://github.com/avialleguerin)
-- **LinkedIn** : [Votre Nom](https://fr.linkedin.com/in/avg38)
-
----
 
 ⭐ Si ce portfolio vous a été utile, n'hésitez pas à lui donner une étoile !
