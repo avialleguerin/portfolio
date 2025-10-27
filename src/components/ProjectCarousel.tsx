@@ -64,26 +64,30 @@ const ProjectCarousel = ({ onViewProject }: ProjectCarouselProps) => {
 
   const rotateLeft = async () => {
     if (isRotating) return
+    
+    // Nettoyer les timers existants
+    clearTimers()
+    
+    // Désactiver les interactions pendant l'animation
     setIsRotating(true)
-
     const clickBlocker = document.querySelector('.click-blocker')
     if (clickBlocker) clickBlocker.classList.add('active')
 
-    // Compute upcoming indexes and preload incoming asset to avoid flash
+    // Calculer les index nécessaires
     const len = PROJECTS.length
     const cur = currentProjectIndex
     const incomingRight = (cur + 2) % len
     
-    // Wait for the next image to be fully loaded before starting animation
+    // Précharger l'image suivante
     await preloadImage(PROJECTS[incomingRight].image)
 
-    // increment token to invalidate any pending callbacks
+    // Incrémenter le token pour invalider les callbacks en attente
     const token = ++animTokenRef.current
     
-    // Force reflow to ensure the browser registers the initial state
+    // Forcer un reflow pour s'assurer que l'état initial est enregistré
     void document.body.offsetHeight
     
-    // Fade out content first
+    // Définir les classes d'animation initiales
     setAnimationClass({
       content: 'opacity-0',
       left: 'fade-out-left',
@@ -91,48 +95,51 @@ const ProjectCarousel = ({ onViewProject }: ProjectCarouselProps) => {
       right: 'slide-to-center-left'
     })
 
+    // Démarrer l'animation principale après un court délai
     mainTimerRef.current = window.setTimeout(() => {
       if (animTokenRef.current !== token) return
       
-      // Update the state in a single batch
       requestAnimationFrame(() => {
-        // Moving carousel to the left: right project becomes center => increment index
+        // Mettre à jour l'index du projet actuel
         pendingFadeRef.current = 'right'
         setCurrentProjectIndex((prev) => (prev + 1) % PROJECTS.length)
         
-        // Clear only the classes that just finished
+        // Réinitialiser les classes d'animation pour la transition
         setAnimationClass(prev => ({
           ...prev, 
           left: '', 
           center: '',
-          // Force opacity-0 to prevent flash before fade-in
           right: 'opacity-0'
         }))
       })
-    }, 600)
+    }, 500) // Réduit légèrement le délai pour une transition plus fluide
   }
 
   const rotateRight = async () => {
     if (isRotating) return
+    
+    // Nettoyer les timers existants
+    clearTimers()
+    
+    // Désactiver les interactions pendant l'animation
     setIsRotating(true)
-
     const clickBlocker = document.querySelector('.click-blocker')
     if (clickBlocker) clickBlocker.classList.add('active')
 
-    // Compute upcoming indexes and preload incoming asset
+    // Calculer les index nécessaires
     const len = PROJECTS.length
     const cur = currentProjectIndex
     const incomingLeft = (cur - 2 + len) % len
     
-    // Wait for the next image to be fully loaded before starting animation
+    // Précharger l'image précédente
     await preloadImage(PROJECTS[incomingLeft].image)
 
     const token = ++animTokenRef.current
     
-    // Force reflow to ensure the browser registers the initial state
+    // Forcer un reflow pour s'assurer que l'état initial est enregistré
     void document.body.offsetHeight
     
-    // Fade out content first
+    // Définir les classes d'animation initiales
     setAnimationClass({
       content: 'opacity-0',
       left: 'slide-to-center-right',
@@ -140,28 +147,27 @@ const ProjectCarousel = ({ onViewProject }: ProjectCarouselProps) => {
       right: 'fade-out-right'
     })
 
+    // Démarrer l'animation principale après un court délai
     mainTimerRef.current = window.setTimeout(() => {
       if (animTokenRef.current !== token) return
       
-      // Update the state in a single batch
       requestAnimationFrame(() => {
-        // Moving carousel to the right: left project becomes center => decrement index
+        // Mettre à jour l'index du projet actuel
         pendingFadeRef.current = 'left'
         setCurrentProjectIndex((prev) => (prev - 1 + PROJECTS.length) % PROJECTS.length)
         
-        // Clear only finished ones
+        // Réinitialiser les classes d'animation pour la transition
         setAnimationClass(prev => ({
           ...prev, 
           center: '', 
           right: '',
-          // Force opacity-0 to prevent flash before fade-in
           left: 'opacity-0'
         }))
       })
-    }, 600)
+    }, 500) // Réduit légèrement le délai pour une transition plus fluide
   }
 
-  // Ensure fade-in is in place right after index change and only after image is decoded
+  // Gérer l'effet de fondu après le changement d'index
   useLayoutEffect(() => {
     const side = pendingFadeRef.current
     if (!side) return
@@ -170,34 +176,38 @@ const ProjectCarousel = ({ onViewProject }: ProjectCarouselProps) => {
     const containerSelector = side === 'right' ? '.project-bg-right' : '.project-bg-left'
     const imgEl = document.querySelector(`${containerSelector} img`) as HTMLImageElement | null
     
-    // Force a reflow to ensure the initial state is applied
+    // Forcer un reflow pour s'assurer que l'état initial est appliqué
     void document.body.offsetHeight
 
     const startFade = () => {
       if (animTokenRef.current !== token) return
       
-      // Wait for the next frame to ensure the DOM has updated
+      // Attendre la prochaine frame pour s'assurer que le DOM est mis à jour
       requestAnimationFrame(() => {
-        // Start fade-in animation
+        // Démarrer l'animation de fondu
         setAnimationClass(prev => ({
           ...prev,
           [side]: `fade-in-${side}`,
           content: 'fade-in-content'
         }))
         
-        // Set timeout to clean up after animation completes
+        // Nettoyer après la fin de l'animation
         finalizeTimerRef.current = window.setTimeout(() => {
           if (animTokenRef.current !== token) return
           
           const clickBlocker = document.querySelector('.click-blocker')
           if (clickBlocker) clickBlocker.classList.remove('active')
           
-          // Reset all animation classes in one go
+          // Réinitialiser les classes d'animation
           setAnimationClass(prev => ({
             ...prev,
             [side]: '',
             content: ''
           }))
+          
+          // Réinitialiser l'état de rotation
+          setIsRotating(false)
+          pendingFadeRef.current = null
           
           setIsRotating(false)
           pendingFadeRef.current = null
