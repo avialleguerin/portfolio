@@ -1,6 +1,6 @@
 # Portfolio - Développeur Full Stack École 42
 
-Un portfolio moderne et responsive créé avec React, TypeScript, et Tailwind CSS, mettant en valeur les compétences et projets d'un développeur diplômé de l'École 42. Je me suis inspiré du design TURA. UI Design by Denys Turynskyi.
+Un portfolio moderne et responsive créé avec React, TypeScript, et Tailwind CSS inspiré du design TURA. UI Design by Denys Turynskyi.
 
 ## 🚀 Fonctionnalités
 
