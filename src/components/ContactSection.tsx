@@ -89,10 +89,12 @@ const ContactSection = ({ className, onLogoClick, onProjectsClick }: ContactSect
       {/* Overlay */}
       <div className="absolute inset-0 bg-black/80 z-0 pointer-events-none"></div>
       
-      <Logo onClick={onLogoClick} />
-      <Navigation onProjectsClick={onProjectsClick} />
-      <SocialLinks />
-      <ScrollIndicator className="scroll-indicator-contact" onClick={onLogoClick} />
+      <div className="hidden sm:block">
+        <Logo onClick={onLogoClick} />
+        <Navigation onProjectsClick={onProjectsClick} />
+        <SocialLinks />
+        <ScrollIndicator className="scroll-indicator-contact" onClick={onLogoClick} />
+      </div>
 
       {/* Contact Content - Two Columns */}
       <div className="relative z-10 w-full max-w-[90rem] m-auto grid grid-cols-2 gap-20">

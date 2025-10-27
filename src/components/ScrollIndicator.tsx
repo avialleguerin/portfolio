@@ -31,7 +31,9 @@ const ScrollIndicator = ({ onClick, className = '' }: ScrollIndicatorProps) => {
         }
         return null
       })()}
-      <span className="font-lagu font-medium [writing-mode:vertical-rl] text-[13px] tracking-[4px] text-white/50 hover:text-white transition-colors duration-300 animate-[pulse_1s_ease-in-out_infinite]">SCROLL</span>
+      <span className="hidden sm:block font-lagu font-medium [writing-mode:vertical-rl] text-[13px] tracking-[4px] text-white/50 hover:text-white transition-colors duration-300 animate-[pulse_1s_ease-in-out_infinite]">
+        SCROLL
+      </span>
       {(() => {
         const isContact = className.includes('contact')
         // For contact page, remove the bottom line

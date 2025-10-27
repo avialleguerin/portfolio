@@ -83,73 +83,101 @@ const ProjectDetail = ({ project, currentProjectIndex, totalProjects, isActive =
   }, [isLightboxOpen])
 
   return (
-    <div className="relative w-full min-h-screen flex items-center justify-center py-24">
-      {/* Content layout inspired by the provided design */}
+    <div className="relative w-full min-h-screen flex items-center justify-center py-12 sm:py-16 md:py-20 lg:py-24">
+      {/* Content layout */}
       <div
-        className={`relative w-full max-w-7xl mx-auto px-8 ${
+        className={`relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 ${
           isLightboxOpen ? 'pointer-events-none select-none' : ''
         }`}
         aria-hidden={isLightboxOpen}
         {...(isLightboxOpen ? { inert: '' as unknown as boolean } : {})}
       >
-        <div className="relative w-full grid grid-cols-1 lg:grid-cols-2 gap-32 items-center justify-items-center">
+        <div className="relative w-full grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-16 lg:gap-32 items-center justify-items-center">
           
           {/* Left side: Gallery with main image and thumbnails */}
-          <div className="relative w-full max-w-md mx-auto lg:mx-0">
+          <div className="relative w-full max-w-md mx-auto lg:mx-0 px-4 sm:px-6 lg:px-0">
             {/* Main project image (clickable to open lightbox) */}
             <div className="relative z-10">
-              <div className="aspect-[4/3] bg-black/20 border border-white/10 rounded-2xl overflow-hidden shadow-[0_25px_80px_rgba(0,0,0,0.6)] transform rotate-2 hover:scale-[1.02] transition-transform duration-300">
+              <div className="aspect-[4/3] bg-black/20 border border-white/10 rounded-2xl overflow-hidden shadow-[0_15px_40px_rgba(0,0,0,0.4)] sm:shadow-[0_25px_80px_rgba(0,0,0,0.6)] transform rotate-0 sm:rotate-1 hover:scale-[1.02] transition-transform duration-300">
                 <button
                   type="button"
                   onClick={() => openLightbox(0)}
                   className="w-full h-full block cursor-zoom-in"
-                  aria-label="Open image in full screen"
+                  aria-label="Ouvrir l'image en plein écran"
                 >
-                  <img src={images[0]} alt={project.title} className="w-full h-full object-cover" />
+                  <img 
+                    src={images[0]} 
+                    alt={project.title} 
+                    className="w-full h-full object-cover" 
+                    loading="lazy"
+                  />
                 </button>
               </div>
             </div>
 
-            {/* Decorative stacked images - always show first 3 images */}
-            <button 
-              type="button"
-              onClick={() => openLightbox(1 % images.length)}
-              className="absolute -top-36 -left-32 w-72 h-52 border border-white/10 rounded-xl overflow-hidden shadow-[0_15px_40px_rgba(0,0,0,0.4)] transform -rotate-12 z-20 hover:scale-[1.02] transition-transform duration-300"
-              aria-label="Open image in full screen"
-            >
-              <img src={images[1 % images.length]} alt="" className="w-full h-full object-cover" />
-            </button>
-            
-            <button 
-              type="button"
-              onClick={() => openLightbox(2 % images.length)}
-              className="absolute -bottom-36 -right-32 w-72 h-52 rounded-xl overflow-hidden shadow-[0_15px_40px_rgba(0,0,0,0.4)] transform rotate-6 z-20 hover:scale-[1.02] transition-transform duration-300"
-              aria-label="Open image in full screen"
-            >
-              <img src={images[2 % images.length]} alt="" className="w-full h-full object-cover" />
-            </button>
+            {/* Decorative stacked images - only show on larger screens */}
+            {images.length > 1 && (
+              <>
+                <button 
+                  type="button"
+                  onClick={() => openLightbox(1 % images.length)}
+                  className="hidden sm:block absolute -top-20 sm:-top-28 md:-top-32 -left-16 sm:-left-20 md:-left-24 w-40 sm:w-56 md:w-64 h-28 sm:h-40 md:h-48 border border-white/10 rounded-xl overflow-hidden shadow-[0_10px_30px_rgba(0,0,0,0.3)] transform -rotate-6 sm:-rotate-12 z-20 hover:scale-[1.02] transition-transform duration-300"
+                  aria-label="Voir l'image suivante"
+                >
+                  <img 
+                    src={images[1 % images.length]} 
+                    alt="" 
+                    className="w-full h-full object-cover" 
+                    loading="lazy"
+                  />
+                </button>
+                
+                {images.length > 2 && (
+                  <button 
+                    type="button"
+                    onClick={() => openLightbox(2 % images.length)}
+                    className="hidden sm:block absolute -bottom-20 sm:-bottom-28 md:-bottom-32 -right-16 sm:-right-20 md:-right-24 w-40 sm:w-56 md:w-64 h-28 sm:h-40 md:h-48 rounded-xl overflow-hidden shadow-[0_10px_30px_rgba(0,0,0,0.3)] transform rotate-3 sm:rotate-6 z-20 hover:scale-[1.02] transition-transform duration-300"
+                    aria-label="Voir l'image précédente"
+                  >
+                    <img 
+                      src={images[2 % images.length]} 
+                      alt="" 
+                      className="w-full h-full object-cover" 
+                      loading="lazy"
+                    />
+                  </button>
+                )}
+              </>
+            )}
           </div>
 
-          {/* Right side: Content structured like the reference */}
-          <div className="space-y-8">
+          {/* Right side: Content */}
+          <div className="space-y-6 sm:space-y-8 w-full px-4 sm:px-6 lg:px-0">
             {/* Header section */}
             <div>
-              <div className="text-xs font-lagu tracking-[4px] text-white/60 uppercase mb-4">— About Project</div>
-              <h1 className="font-lemon text-4xl lg:text-5xl text-white leading-tight tracking-[2px] mb-6">
+              <div className="text-[10px] xs:text-xs font-lagu tracking-[3px] sm:tracking-[4px] text-white/60 uppercase mb-3 sm:mb-4">
+                — À propos du projet
+              </div>
+              <h1 className="font-lemon text-2xl xs:text-3xl sm:text-4xl lg:text-5xl text-white leading-tight tracking-[1px] sm:tracking-[2px] mb-4 sm:mb-6">
                 {project.title}
               </h1>
-              <p className="font-antario text-lg text-[#c9c9c9e6] leading-relaxed max-w-lg">
+              <p className="font-antario text-base sm:text-lg text-[#c9c9c9e6] leading-relaxed max-w-lg">
                 {project.description}
               </p>
             </div>
 
             {/* All tools list */}
-            {(project.tools || []) && (
-              <div className="pt-4">
-                <div className="text-xs font-lagu tracking-[3px] text-white/60 uppercase mb-3">STACK</div>
-                <div className="flex flex-wrap gap-2">
+            {(project.tools || []).length > 0 && (
+              <div className="pt-2 sm:pt-4">
+                <div className="text-[10px] xs:text-xs font-lagu tracking-[2px] sm:tracking-[3px] text-white/60 uppercase mb-2 sm:mb-3">
+                  TECHNOLOGIES
+                </div>
+                <div className="flex flex-wrap gap-1.5 sm:gap-2">
                   {(project.tools || []).map((tool) => (
-                    <span key={tool} className="text-xs tracking-wider uppercase bg-white/5 text-white/70 border border-white/10 rounded-full px-3 py-1">
+                    <span 
+                      key={tool} 
+                      className="text-[10px] xs:text-xs tracking-wider uppercase bg-white/5 text-white/70 border border-white/10 rounded-full px-2.5 xs:px-3 py-1 sm:py-1.5"
+                    >
                       {tool}
                     </span>
                   ))}
@@ -159,12 +187,13 @@ const ProjectDetail = ({ project, currentProjectIndex, totalProjects, isActive =
 
             {/* Back button */}
             {onBack && (
-              <div className="pt-6">
+              <div className="pt-4 sm:pt-6">
                 <button
+                  ref={backBtnRef}
                   onClick={onBack}
-                  className="font-lagu font-medium py-[14px] px-[32px] text-xs tracking-[3px] text-white/80 bg-[#1a1a1a] border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.4)] cursor-pointer transition-all duration-300 uppercase hover:text-white hover:bg-[#2a2a2a] hover:border-white/20 hover:shadow-[0_12px_40px_rgba(0,0,0,0.6)] rounded-lg"
+                  className="font-lagu font-medium py-3 sm:py-[14px] px-6 sm:px-8 text-xs tracking-[2px] sm:tracking-[3px] text-white/80 bg-[#1a1a1a] border border-white/10 shadow-[0_4px_16px_rgba(0,0,0,0.3)] sm:shadow-[0_8px_32px_rgba(0,0,0,0.4)] cursor-pointer transition-all duration-300 uppercase hover:text-white hover:bg-[#2a2a2a] hover:border-white/20 hover:shadow-[0_8px_40px_rgba(0,0,0,0.6)] rounded-lg w-full sm:w-auto text-center"
                 >
-                  ← Back to Projects
+                  ← Retour aux projets
                 </button>
               </div>
             )}
@@ -174,36 +203,43 @@ const ProjectDetail = ({ project, currentProjectIndex, totalProjects, isActive =
       
       {/* Fixed Navigation Dots with Arrows - Only show when project detail is active and visible */}
       {onNavigateProject && totalProjects > 1 && project && isActive && (
-        <div className="fixed bottom-8 left-0 right-0 flex justify-center z-10">
-          <div className="flex items-center space-x-6">
+        <div className="fixed bottom-4 sm:bottom-6 left-0 right-0 flex justify-center z-10 px-4">
+          <div className="flex items-center space-x-4 sm:space-x-6 bg-black/60 backdrop-blur-sm py-2 px-4 sm:px-6 rounded-full border border-white/10">
             {/* Left Arrow */}
             <button
               onClick={() => onNavigateProject('prev')}
-              className="text-white/70 hover:text-white transition-colors duration-200"
-              aria-label="Previous project"
+              className="text-white/70 hover:text-white transition-colors duration-200 p-1"
+              aria-label="Projet précédent"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M15 18l-6-6 6-6" />
               </svg>
             </button>
             
             {/* Dots */}
-            <div className="flex space-x-3">
+            <div className="flex space-x-2 sm:space-x-3">
               {Array.from({ length: totalProjects }).map((_, index) => (
                 <button
                   key={index}
                   onClick={() => {
                     const direction = index > currentProjectIndex ? 'next' : 'prev';
                     let clicks = Math.abs(index - currentProjectIndex);
-                    while (clicks > 0) {
-                      onNavigateProject(direction);
-                      clicks--;
-                    }
+                    // Animate through each project
+                    const animate = () => {
+                      if (clicks > 0) {
+                        onNavigateProject(direction);
+                        clicks--;
+                        requestAnimationFrame(() => {
+                          setTimeout(animate, 150); // Small delay between animations
+                        });
+                      }
+                    };
+                    animate();
                   }}
-                  className={`h-2.5 rounded-full transition-all duration-300 ${
-                    index === currentProjectIndex ? 'bg-white w-8' : 'bg-white/30 w-2.5 hover:bg-white/50'
+                  className={`h-1.5 sm:h-2 rounded-full transition-all duration-200 ${
+                    index === currentProjectIndex ? 'bg-white w-6' : 'bg-white/30 hover:bg-white/50 w-3'
                   }`}
-                  aria-label={`Go to project ${index + 1} of ${totalProjects}`}
+                  aria-label={`Aller au projet ${index + 1}`}
                   aria-current={index === currentProjectIndex ? 'step' : undefined}
                 />
               ))}
@@ -212,10 +248,10 @@ const ProjectDetail = ({ project, currentProjectIndex, totalProjects, isActive =
             {/* Right Arrow */}
             <button
               onClick={() => onNavigateProject('next')}
-              className="text-white/70 hover:text-white transition-colors duration-200"
-              aria-label="Next project"
+              className="text-white/70 hover:text-white transition-colors duration-200 p-1"
+              aria-label="Projet suivant"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M9 18l6-6-6-6" />
               </svg>
             </button>

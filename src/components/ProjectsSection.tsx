@@ -72,10 +72,12 @@ const ProjectsSection = ({ onScrollToContact, className, onLogoClick }: Projects
       {/* Overlay */}
       <div className="absolute inset-0 bg-black/80 z-0 pointer-events-none"></div>
       
-      <Logo onClick={selectedProject ? () => setSelectedProjectIndex(null) : onLogoClick} />
-      <Navigation onContactClick={onScrollToContact} />
-      <SocialLinks />
-      <ScrollIndicator className="scroll-indicator-projects" onClick={onScrollToContact} />
+      <div className="hidden sm:block">
+        <Logo onClick={selectedProject ? () => setSelectedProjectIndex(null) : onLogoClick} />
+        <Navigation onContactClick={onScrollToContact} />
+        <SocialLinks />
+        <ScrollIndicator className="scroll-indicator-projects" onClick={onScrollToContact} />
+      </div>
 
       {/* Crossfade containers */}
       <div className={`absolute inset-0 flex items-center justify-center transition-opacity duration-500 ${selectedProject ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>

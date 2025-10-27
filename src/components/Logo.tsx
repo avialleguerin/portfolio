@@ -15,10 +15,14 @@ const Logo = ({ onClick }: LogoProps) => {
 
   return (
     <div 
-      className="absolute top-[50px] left-[50px] z-[10000] opacity-70 hover:opacity-100 cursor-pointer transition-opacity duration-300 pointer-events-auto"
+      className="absolute top-8 left-8 z-50 opacity-70 hover:opacity-100 cursor-pointer transition-opacity duration-300 pointer-events-auto"
       onClick={handleClick}
     >
-      <img src="/logo.png" alt="AMAN Logo" className="h-[90px] w-auto object-contain" />
+      <img 
+        src="/logo.png" 
+        alt="AMAN Logo" 
+        className="h-[70px] w-auto object-contain sm:h-[90px]" 
+      />
     </div>
   )
 }
