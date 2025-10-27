@@ -282,7 +282,7 @@ const ProjectCarousel = ({ onViewProject }: ProjectCarouselProps) => {
       {/* Main Project Content - Tout en dessous de l'image */}
       <div className="absolute top-[65%] left-1/2 -translate-x-1/2 text-center z-10 w-full max-w-4xl px-10">
         <div className={`transition-opacity duration-500 ${animationClass.content || ''}`}>
-          <h1 className="font-lemon text-[70px] font-black tracking-[4px] text-white mb-8 [text-shadow:0_10px_30px_rgba(0,0,0,0.8)] leading-[1.1] pointer-events-none">
+          <h1 className="font-lemon text-[40px] sm:text-[60px] font-black tracking-[4px] text-white mb-8 [text-shadow:0_10px_30px_rgba(0,0,0,0.8)] leading-[1.1] pointer-events-none">
             {centerProject.title}
           </h1>
           
