@@ -37,7 +37,7 @@ export const PROJECTS: Project[] = [
     image: '/project1.png',
     images: ['/project1-1.png', '/project1-2.png', '/project1-3.png'],
     title: 'FINANCE TRACKER',
-    summary: 'Full-stack personal finance management web application — transaction management, budgets, savings objectives, automatic categorization, CSV import, and advanced analytics dashboard.',
+    summary: 'Full-stack personal finance management web application.',
     description: 'I developed a personal finance web app using TypeScript. It lets users add, edit, and delete their transactions, import data from CSV files, and attach images to each entry. The app helps manage budgets and savings goals, and it automatically sorts transactions by keywords. The project includes setup tools, database scripts, and file storage for uploaded images.',
     tools: [ 'React', 'TypeScript', 'Vite', 'TailwindCSS', 'Express', 'Prisma', 'SQLite', 'Recharts', 'Zustand', 'PapaParse' ]
   },
@@ -61,7 +61,7 @@ export const PROJECTS: Project[] = [
     image: '/project4.png',
     images: ['/project4-1.png', '/project4-2.png', '/project4-3.png', '/project4-4.png'],
     title: 'PORTFOLIO',
-    summary: 'Portfolio built with React and TypeScript, showcasing personal projects with a modern and responsive interface. Includes an interactive gallery, smooth animations, and adaptive design.',
+    summary: 'Portfolio built with React and TypeScript, showcasing personal projects with a modern and responsive interface.',
     description: 'Development of a modern and elegant personal portfolio highlighting my frontend development skills. The website offers a smooth user experience with gentle transitions and a clean design. Features include an interactive project gallery, a detailed about section, and a functional contact form. The site is fully responsive and performance-optimized.',
     tools: ['React', 'TypeScript', 'TailwindCSS', 'Framer Motion', 'Vite']
   },

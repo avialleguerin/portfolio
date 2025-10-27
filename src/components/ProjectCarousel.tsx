@@ -252,10 +252,10 @@ const ProjectCarousel = ({ onViewProject }: ProjectCarouselProps) => {
   return (
     <>
       {/* Projects Background */}
-      <div className="m-auto flex items-end justify-center px-20 z-[1] relative -top-20">
+      <div className="m-auto flex items-start sm:items-center justify-center px-4 sm:px-10 md:px-20 z-[1] relative h-[calc(100vh-140px)] sm:h-auto sm:items-end pt-10 sm:pt-0 sm:-top-16 md:-top-20">
         {/* Left Project */}
         <div 
-          className={`project-bg-left rounded-2xl flex-1 h-[50vh] w-[50vh] max-w-[50vh] overflow-hidden relative transition-[filter] duration-500 ease-in-out aspect-square
+          className={`project-bg-left rounded-2xl flex-1 h-[30vh] sm:h-[40vh] md:h-[50vh] w-[30vh] sm:w-[40vh] md:w-[50vh] max-w-[30vh] sm:max-w-[40vh] md:max-w-[50vh] overflow-hidden relative transition-all duration-500 ease-in-out aspect-square
                       blur-[1px] brightness-[0.6] scale-[0.8] origin-[center_bottom] mt-0 z-[2]
                       hover:blur-0 hover:brightness-[0.7] cursor-pointer
                       before:content-[''] before:absolute before:inset-0 before:bg-gradient-to-b before:from-transparent before:via-transparent before:to-[#222] before:z-10
@@ -267,8 +267,8 @@ const ProjectCarousel = ({ onViewProject }: ProjectCarouselProps) => {
         
         {/* Center Project */}
         <div 
-          className={`project-bg-center rounded-2xl flex-[0_0_50vh] h-[50vh] w-[50vh] max-w-[50vh] min-w-[50vh] aspect-square overflow-hidden relative z-[3] -mx-20
-                      shadow-[0_20px_60px_rgba(0,0,0,0.5),0_10px_30px_rgba(0,0,0,0.3)] hover:scale-[1.02] transition-transform duration-300
+          className={`project-bg-center rounded-2xl flex-[0_0_30vh] sm:flex-[0_0_40vh] md:flex-[0_0_50vh] h-[30vh] sm:h-[40vh] md:h-[50vh] w-[30vh] sm:w-[40vh] md:w-[50vh] max-w-[30vh] sm:max-w-[40vh] md:max-w-[50vh] min-w-[30vh] sm:min-w-[40vh] md:min-w-[50vh] aspect-square overflow-hidden relative z-[3] -mx-8 sm:-mx-12 md:-mx-20
+                      shadow-[0_10px_30px_rgba(0,0,0,0.4),0_5px_15px_rgba(0,0,0,0.2)] sm:shadow-[0_15px_45px_rgba(0,0,0,0.5),0_8px_25px_rgba(0,0,0,0.3)] md:shadow-[0_20px_60px_rgba(0,0,0,0.5),0_10px_30px_rgba(0,0,0,0.3)] hover:scale-[1.02] transition-transform duration-300
                       before:content-[''] before:absolute before:inset-0 before:bg-gradient-to-b before:from-transparent before:via-transparent before:to-[#222] before:z-10
                       cursor-pointer ${animationClass.center || ''}`}
           onClick={() => onViewProject?.(centerProject)}
@@ -278,7 +278,7 @@ const ProjectCarousel = ({ onViewProject }: ProjectCarouselProps) => {
         
         {/* Right Project */}
         <div 
-          className={`project-bg-right rounded-2xl flex-1 h-[50vh] w-[50vh] max-w-[50vh] overflow-hidden relative transition-[filter] duration-500 ease-in-out aspect-square
+          className={`project-bg-right rounded-2xl flex-1 h-[30vh] sm:h-[40vh] md:h-[50vh] w-[30vh] sm:w-[40vh] md:w-[50vh] max-w-[30vh] sm:max-w-[40vh] md:max-w-[50vh] overflow-hidden relative transition-all duration-500 ease-in-out aspect-square
                       blur-[1px] brightness-[0.6] scale-[0.8] origin-[center_bottom] mt-0 z-[2]
                       hover:blur-0 hover:brightness-[0.7] cursor-pointer
                       before:content-[''] before:absolute before:inset-0 before:bg-gradient-to-b before:from-transparent before:via-transparent before:to-[#222] before:z-10
@@ -289,10 +289,10 @@ const ProjectCarousel = ({ onViewProject }: ProjectCarouselProps) => {
         </div>
       </div>
 
-      {/* Main Project Content - Tout en dessous de l'image */}
-      <div className="absolute top-[65%] left-1/2 -translate-x-1/2 text-center z-10 w-full max-w-4xl px-10">
+      {/* Main Project Content - Positionnement adaptatif */}
+      <div className="absolute top-[55%] sm:top-[65%] left-1/2 -translate-x-1/2 text-center z-10 w-full max-w-4xl px-4 sm:px-10">
         <div className={`transition-opacity duration-500 ${animationClass.content || ''}`}>
-          <h1 className="font-lemon text-[70px] font-black tracking-[4px] text-white mb-8 [text-shadow:0_10px_30px_rgba(0,0,0,0.8)] leading-[1.1] pointer-events-none">
+          <h1 className="font-lemon text-4xl sm:text-5xl md:text-6xl lg:text-[70px] font-black tracking-[2px] sm:tracking-[3px] md:tracking-[4px] text-white mb-6 sm:mb-8 [text-shadow:0_10px_30px_rgba(0,0,0,0.8)] leading-[1.1] pointer-events-none">
             {centerProject.title}
           </h1>
           

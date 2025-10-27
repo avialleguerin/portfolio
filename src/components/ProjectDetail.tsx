@@ -158,7 +158,7 @@ const ProjectDetail = ({ project, currentProjectIndex, totalProjects, isActive =
               <div className="text-[10px] xs:text-xs font-lagu tracking-[3px] sm:tracking-[4px] text-white/60 uppercase mb-3 sm:mb-4">
                 — À propos du projet
               </div>
-              <h1 className="font-lemon text-2xl xs:text-3xl sm:text-4xl lg:text-5xl text-white leading-tight tracking-[1px] sm:tracking-[2px] mb-4 sm:mb-6">
+              <h1 className="font-lemon text-xl xs:text-2xl sm:text-4xl lg:text-5xl text-white leading-tight tracking-[1px] sm:tracking-[2px] mb-4 sm:mb-6">
                 {project.title}
               </h1>
               <p className="font-antario text-base sm:text-lg text-[#c9c9c9e6] leading-relaxed max-w-lg">
@@ -193,7 +193,7 @@ const ProjectDetail = ({ project, currentProjectIndex, totalProjects, isActive =
                   onClick={onBack}
                   className="font-lagu font-medium py-3 sm:py-[14px] px-6 sm:px-8 text-xs tracking-[2px] sm:tracking-[3px] text-white/80 bg-[#1a1a1a] border border-white/10 shadow-[0_4px_16px_rgba(0,0,0,0.3)] sm:shadow-[0_8px_32px_rgba(0,0,0,0.4)] cursor-pointer transition-all duration-300 uppercase hover:text-white hover:bg-[#2a2a2a] hover:border-white/20 hover:shadow-[0_8px_40px_rgba(0,0,0,0.6)] rounded-lg w-full sm:w-auto text-center"
                 >
-                  ← Retour aux projets
+                  ← Back to projects
                 </button>
               </div>
             )}
@@ -204,7 +204,7 @@ const ProjectDetail = ({ project, currentProjectIndex, totalProjects, isActive =
       {/* Fixed Navigation Dots with Arrows - Only show when project detail is active and visible */}
       {onNavigateProject && totalProjects > 1 && project && isActive && (
         <div className="fixed bottom-4 sm:bottom-6 left-0 right-0 flex justify-center z-10 px-4">
-          <div className="flex items-center space-x-4 sm:space-x-6 bg-[#1a1a1a] backdrop-blur-sm p-2 rounded-full border border-white/10 md:border-none md:rounded-none md:p-0 md:shadow-none md:bg-transparent">
+          <div className="flex items-center space-x-4 sm:space-x-6 bg-[#1a1a1a] p-2 rounded-full border border-white/10 md:border-none md:rounded-none md:p-0 md:shadow-none md:bg-transparent">
             {/* Left Arrow */}
             <button
               onClick={() => onNavigateProject('prev')}
