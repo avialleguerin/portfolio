@@ -71,8 +71,8 @@ const HomeSection = ({ onScrollToProjects, onScrollToContact, className, onLogoC
 
       <div className="hidden sm:block">
         <SocialLinks />
+        <ScrollIndicator onClick={onScrollToProjects} />
       </div>
-      <ScrollIndicator onClick={onScrollToProjects} />
     </section>
   )
 }

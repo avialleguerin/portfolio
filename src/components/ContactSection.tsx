@@ -34,13 +34,13 @@ const ContactSection = ({ className, onLogoClick, onProjectsClick }: ContactSect
 
     // Basic validation
     if (!formData.name || !formData.email || !formData.message) {
-      setStatus({ type: 'error', message: 'Veuillez remplir tous les champs requis.' })
+      setStatus({ type: 'error', message: 'Please fill in all required fields.' })
       return
     }
 
     if (!EMAILJS_PUBLIC_KEY || !EMAILJS_SERVICE_ID || !EMAILJS_TEMPLATE_ID) {
       console.error('EmailJS keys are missing. Please fill them in src/data/constants.ts')
-      setStatus({ type: 'error', message: "Configuration d'envoi d'email manquante. Contactez l'administrateur." })
+      setStatus({ type: 'error', message: 'Email sending configuration missing. Please contact the administrator.' })
       return
     }
 
@@ -63,11 +63,12 @@ const ContactSection = ({ className, onLogoClick, onProjectsClick }: ContactSect
 
       await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams)
 
-      setStatus({ type: 'success', message: 'Merci ! Votre message a été envoyé avec succès.' })
+      setStatus({ type: 'success', message: 'Thank you! Your message has been sent successfully.' })
       setFormData({ name: '', phone: '', email: '', message: '' })
     } catch (err) {
       console.error('Email send error:', err)
-      setStatus({ type: 'error', message: "Une erreur s'est produite lors de l'envoi. Réessayez plus tard." })
+      setStatus({ type: 'error', message: 'An error occurred while sending. Please try again later.' })
+      
     } finally {
       setIsSending(false)
     }
@@ -96,21 +97,22 @@ const ContactSection = ({ className, onLogoClick, onProjectsClick }: ContactSect
         <ScrollIndicator className="scroll-indicator-contact" onClick={onLogoClick} />
       </div>
 
-      {/* Contact Content - Two Columns */}
-      <div className="relative z-10 w-full max-w-[90rem] m-auto grid grid-cols-2 gap-20">
-        
+      {/* Contact Content - Responsive Layout */}
+      <div className="relative z-10 w-full max-w-[90rem] m-auto px-4 sm:px-0">
+        <div className="flex flex-col sm:grid sm:grid-cols-2 gap-8 sm:gap-20">
+          
         {/* Left Column - Contact Info */}
-        <div className="text-center m-auto">
-          <h1 className="font-lemon text-[60px] font-black tracking-[6px] text-white mb-12 [text-shadow:0_15px_40px_rgba(0,0,0,0.9)]">
+        <div className="text-center m-auto w-full">
+          <h1 className="font-lemon text-[40px] sm:text-[60px] font-black tracking-[6px] text-white mb-8 sm:mb-12 [text-shadow:0_15px_40px_rgba(0,0,0,0.9)]">
             CONTACT
           </h1>
           
-          <p className="font-antario font-bold text-white/70  mb-16">
+          <p className="font-antario font-bold text-white/70 mb-8 sm:mb-16 px-4 sm:px-0">
             Feel free to reach me to discuss about your projects or collaborations. I will be happy to respond to you as soon as possible.
           </p>
 
-          {/* Contact Details */}
-          <div className="space-y-10">
+          {/* Contact Details - Hidden on mobile */}
+          <div className="hidden sm:block space-y-10">
             {/* Address */}
             <div>
               <h3 className="font-antario text-md font-bold tracking-[3px] text-white mb-3">
@@ -150,7 +152,7 @@ const ContactSection = ({ className, onLogoClick, onProjectsClick }: ContactSect
         </div>
 
         {/* Right Column - Contact Form */}
-        <div className="font-lagu py-[50px] px-[50px] text-xs text-center tracking-[3px] text-white/80 bg-[#1a1a1a] border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.4)] rounded-lg">
+        <div className="font-lagu py-8 sm:py-[50px] px-6 sm:px-[50px] text-xs text-center tracking-[3px] text-white/80 bg-[#1a1a1a] border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.4)] rounded-lg w-full">
           {/* <h2 className="font-lemon text-[50px] font-black tracking-[6px] text-white mb-12 [text-shadow:0_15px_40px_rgba(0,0,0,0.9)]">
             CONTACT FORM
           </h2> */}
@@ -226,6 +228,7 @@ const ContactSection = ({ className, onLogoClick, onProjectsClick }: ContactSect
             )}
           </form>
         </div>
+      </div>
       </div>
     </section>
   )

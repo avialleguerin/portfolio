@@ -38,23 +38,23 @@ export const PROJECTS: Project[] = [
     images: ['/project1-1.png', '/project1-2.png', '/project1-3.png'],
     title: 'FINANCE TRACKER',
     summary: 'Full-stack personal finance management web application — transaction management, budgets, savings objectives, automatic categorization, CSV import, and advanced analytics dashboard.',
-    description: 'I developed a personal finance web app using TypeScript. It lets users add, edit, and delete their transactions, import data from CSV files, and attach images to each entry. The app helps manage budgets and savings goals, and it automatically sorts transactions by keywords. It also shows clear statistics with charts and summaries. Data is visualized with Recharts, while Zustand manages the app’s state. The project includes setup tools, database scripts, and file storage for uploaded images.',
+    description: 'I developed a personal finance web app using TypeScript. It lets users add, edit, and delete their transactions, import data from CSV files, and attach images to each entry. The app helps manage budgets and savings goals, and it automatically sorts transactions by keywords. The project includes setup tools, database scripts, and file storage for uploaded images.',
     tools: [ 'React', 'TypeScript', 'Vite', 'TailwindCSS', 'Express', 'Prisma', 'SQLite', 'Recharts', 'Zustand', 'PapaParse' ]
   },
   {
     image: '/project2.png',
     images: ['/project2-1.png', '/project2-2.png', '/project2-3.png'],
     title: 'TRIBOS',
-    summary: 'Application mobile pour se motiver entre amis et suivre ses activités sportives.',
-    description: 'Développement complet d’une application mobile dédiée à la gestion des activités sportives. L’outil permet de suivre des activités, de les partager entre amis, et de les visualiser sur une carte. Intégration complète avec Supabase pour l’authentification, le stockage (fichiers TSV, avatars), et la base de données. Interface d’administration et pages marketing (landing, pricing). Gestion des profils utilisateurs, réinitialisation de mot de passe, et import/export pour workflows commerciaux.',
+    summary: 'Mobile app to stay motivated with friends and track sports activities.',
+    description: 'Complete development of a mobile application dedicated to managing sports activities. The tool allows users to track activities, share them with friends, and visualize them on a map.',
     tools: ['Nuxt 4', 'TypeScript', 'TailwindCSS', 'Supabase (auth, storage, db)', 'Pinia', 'Nuxt UI', 'Lucide (icônes)', 'ofetch/$fetch', 'Turf.js', 'reka-ui'] 
   },
   {
     image: '/project3.png',
     images: ['/project3-1.png', '/project3-2.png', '/project3-3.png'],
-    title: 'TROUVE ENTREPRISE',
-    summary: 'Plateforme SaaS pour extraire, organiser et gérer des fiches d’entreprises depuis des sources géographiques.',
-    description: 'Développement complet d’une application web dédiée à la recherche et à la gestion de prospects locaux. L’outil permet d’extraire en masse des lieux (export TSV), de les stocker et trier, d’afficher l’avancement des extractions en temps réel, de gérer des statuts (contacté, à contacter…), et d’ajouter des notes utilisateur par lieu. Intégration complète avec Supabase pour l’authentification, le stockage (fichiers TSV, avatars), et la base de données. Interface d’administration et pages marketing (landing, pricing). Gestion des profils utilisateurs, réinitialisation de mot de passe, et import/export pour workflows commerciaux.',
+    title: 'FIND COMPANY',
+    summary: 'SaaS platform to extract, organize, and manage business listings from geographic sources.',
+    description: 'Complete development of a web application dedicated to finding and managing local business leads. The tool allows for bulk extraction of locations (TSV export), storing and sorting them, displaying extraction progress in real-time, managing statuses (contacted, to contact, etc.), and adding user notes per location. Full integration with Supabase for authentication, storage (TSV files, avatars), and database. Includes admin interface and marketing pages (landing, pricing). User profile management, password reset, and import/export for business workflows.',
     tools: ['Nuxt 4', 'TypeScript', 'TailwindCSS', 'Supabase (auth, storage, db)', 'Pinia', 'Nuxt UI', 'Lucide (icônes)', 'ofetch/$fetch', 'Turf.js', 'reka-ui']
   },
   {

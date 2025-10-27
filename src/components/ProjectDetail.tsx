@@ -204,7 +204,7 @@ const ProjectDetail = ({ project, currentProjectIndex, totalProjects, isActive =
       {/* Fixed Navigation Dots with Arrows - Only show when project detail is active and visible */}
       {onNavigateProject && totalProjects > 1 && project && isActive && (
         <div className="fixed bottom-4 sm:bottom-6 left-0 right-0 flex justify-center z-10 px-4">
-          <div className="flex items-center space-x-4 sm:space-x-6 bg-black/60 backdrop-blur-sm py-2 px-4 sm:px-6 rounded-full border border-white/10">
+          <div className="flex items-center space-x-4 sm:space-x-6 bg-[#1a1a1a] backdrop-blur-sm p-2 rounded-full border border-white/10 md:border-none md:rounded-none md:p-0 md:shadow-none md:bg-transparent">
             {/* Left Arrow */}
             <button
               onClick={() => onNavigateProject('prev')}
