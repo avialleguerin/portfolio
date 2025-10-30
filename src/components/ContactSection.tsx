@@ -108,7 +108,7 @@ const ContactSection = ({ className, onLogoClick, onProjectsClick }: ContactSect
           </h1>
           
           <p className="font-antario font-bold text-[18px] text-white/70 mb-8 sm:mb-16 px-4 sm:px-0">
-            Feel free to reach me to discuss about your projects or collaborations. I will be happy to respond to you as soon as possible.
+            Feel free to reach me to discuss about your projects or collaborations. I will be happy to respond as soon as possible.
           </p>
 
           {/* Contact Details - Hidden on mobile */}

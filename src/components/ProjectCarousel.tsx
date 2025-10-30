@@ -9,6 +9,7 @@ interface ProjectCarouselProps {
 const ProjectCarousel = ({ onViewProject }: ProjectCarouselProps) => {
   const [currentProjectIndex, setCurrentProjectIndex] = useState(1)
   const [isRotating, setIsRotating] = useState(false)
+  const [hoveredProject, setHoveredProject] = useState<'left' | 'right' | null>(null)
   const [animationClass, setAnimationClass] = useState<{
     left?: string
     center?: string
@@ -251,8 +252,16 @@ const ProjectCarousel = ({ onViewProject }: ProjectCarouselProps) => {
                       before:content-[''] before:absolute before:inset-0 before:bg-gradient-to-b before:from-transparent before:via-transparent before:to-[#222] before:z-10
                       ${animationClass.left || ''}`}
           onClick={rotateRight}
+          onMouseEnter={() => setHoveredProject('left')}
+          onMouseLeave={() => setHoveredProject(null)}
         >
           <img src={leftProject.image} alt={leftProject.title} className="w-full h-full object-cover block" />
+          <div 
+            className={`absolute top-4 left-4 bg-black/70 text-white px-4 py-2 rounded-md text-base font-medium transition-opacity duration-300 z-20
+                        ${hoveredProject === 'left' ? 'opacity-100' : 'opacity-0'}`}
+          >
+            {leftProject.title}
+          </div>
         </div>
         
         {/* Center Project */}
@@ -274,8 +283,16 @@ const ProjectCarousel = ({ onViewProject }: ProjectCarouselProps) => {
                       before:content-[''] before:absolute before:inset-0 before:bg-gradient-to-b before:from-transparent before:via-transparent before:to-[#222] before:z-10
                       ${animationClass.right || ''}`}
           onClick={rotateLeft}
+          onMouseEnter={() => setHoveredProject('right')}
+          onMouseLeave={() => setHoveredProject(null)}
         >
           <img src={rightProject.image} alt={rightProject.title} className="w-full h-full object-cover block" />
+          <div 
+            className={`absolute top-4 right-4 bg-black/70 text-white px-4 py-2 rounded-md text-base font-medium transition-opacity duration-300 z-20
+                        ${hoveredProject === 'right' ? 'opacity-100' : 'opacity-0'}`}
+          >
+            {rightProject.title}
+          </div>
         </div>
       </div>
 
