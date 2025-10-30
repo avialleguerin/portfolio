@@ -129,7 +129,7 @@ const ContactSection = ({ className, onLogoClick, onProjectsClick }: ContactSect
                 Phone
               </h3>
               <a 
-                href="tel:+33612345678" 
+                href="tel:+33783778779" 
                 className="font-antario text-base font-bold text-white/60 hover:text-white transition-colors duration-300"
               >
                 +33 7 83 77 87 79
